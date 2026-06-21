@@ -1,0 +1,7 @@
+prompt_id=D16_philosophy_02
+prompt=<|im_start|>user Why did Immanuel Kant matter to metaphysics, ethics, and epistemology?<|im_end|> <|im_start|>assistant </think>  
+n_tokens_prompt=41
+n_tokens_generated=2048
+n_layer_tensors=0
+n_router_tensors=48
+elapsed_ms=26365

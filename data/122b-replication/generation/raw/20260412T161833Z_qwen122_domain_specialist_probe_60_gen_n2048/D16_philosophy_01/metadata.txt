@@ -1,0 +1,7 @@
+prompt_id=D16_philosophy_01
+prompt=<|im_start|>user How does epistemology work as a field concerned with justification, belief, and knowledge?<|im_end|> <|im_start|>assistant </think>  
+n_tokens_prompt=42
+n_tokens_generated=2048
+n_layer_tensors=0
+n_router_tensors=48
+elapsed_ms=26392

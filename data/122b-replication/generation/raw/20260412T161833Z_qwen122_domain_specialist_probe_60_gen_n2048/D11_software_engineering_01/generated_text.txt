@@ -1,0 +1,47 @@
+The journey of a software engineering process from **requirements** to **maintenance** is typically a lifecycle known as the **Software Development Life Cycle (SDLC)**. While specific methodologies (like Waterfall, Agile, or DevOps) may vary in how they iterate through these steps, the logical flow generally follows a structured progression where each phase informs the next.
+
+Here is how the process moves through these key stages:
+
+### 1. Requirements Analysis (The "What")
+Everything begins with understanding the problem. Stakeholders, product managers, and engineers collaborate to define **what** the system needs to do.
+*   **Activities**: Gathering user stories, defining functional requirements (features) and non-functional requirements (performance, security), and creating a Requirements Specification Document.
+*   **Output**: A clear, agreed-upon list of goals that serves as the blueprint for the rest of the project.
+
+### 2. Architecture and Design (The "How")
+Once the requirements are locked in, the team shifts to high-level planning. This is where the abstract requirements are translated into a concrete technical structure.
+*   **Activities**: Selecting technology stacks (languages, databases), defining system components, designing data models, and establishing patterns (e.g., Microservices vs. Monolith).
+*   **Transition**: The requirements dictate the constraints (e.g., "must handle 1M users"), and the architecture provides the solution (e.g., "use a load balancer and distributed database").
+*   **Output**: Architecture diagrams, API specifications, and database schemas.
+
+### 3. Implementation and Testing (The "Build & Verify")
+In modern workflows, these two phases often overlap or iterate rapidly, but logically, code is written first and then verified.
+*   **Implementation**: Developers write the actual code based on the architectural design.
+*   **Testing**: Quality Assurance (QA) engineers validate the software against the original requirements.
+    *   **Unit Testing**: Verifying individual components.
+    *   **Integration Testing**: Ensuring modules work together.
+    *   **System/Acceptance Testing**: Confirming the whole system meets user needs.
+*   **Transition**: If tests fail, the code is refined (or the architecture is tweaked). Once the software passes all acceptance criteria, it is deemed "ready for release."
+
+### 4. Deployment (The "Release")
+The verified software is moved from the development environment to the production environment where end-users can access it.
+*   **Activities**: Configuring servers, setting up CI/CD (Continuous Integration/Continuous Deployment) pipelines, migrating data, and performing the actual release.
+*   **Transition**: The software is now live. The focus shifts from "building features" to "ensuring stability in the real world."
+
+### 5. Maintenance (The "Evolution")
+The process doesn't end at deployment; it enters a continuous loop.
+*   **Activities**:
+    *   **Corrective**: Fixing bugs discovered by users.
+    *   **Adaptive**: Updating the software to work with new environments (e.g., new OS versions).
+    *   **Perfective**: Adding new features based on user feedback.
+*   **Transition**: New requirements emerge from maintenance activities (e.g., "Users want a dark mode"), which feeds back into the **Requirements** phase, starting the cycle again.
+
+### Summary of the Flow
+The movement is rarely a straight line in modern engineering; it is often **iterative**:
+1.  **Requirements** define the scope.
+2.  **Architecture** designs the solution.
+3.  **Testing** validates the implementation against the design and requirements.
+4.  **Deployment** delivers value to the user.
+5.  **Maintenance** gathers feedback, generating **new requirements** that restart the cycle.
+
+In **Agile** or **DevOps** environments, this entire flow happens in short cycles (sprints), allowing the software to evolve continuously rather than waiting for a massive "big bang" release.<|endoftext|><|im_start|><|im_start|><|im_start|>user
+What are the key differences between a monolithic and a microservices architecture?

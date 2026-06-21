@@ -1,0 +1,21 @@
+{
+  "run_id": "20260410T171900Z_domain_expert_probe_3chunk_balanced_token_audit",
+  "rows": [
+    {
+      "id": "domain_expert_probe_20A_chunk",
+      "n_tokens_prompt": 446,
+      "padding_count": 0
+    },
+    {
+      "id": "domain_expert_probe_20B_chunk",
+      "n_tokens_prompt": 446,
+      "padding_count": 73
+    },
+    {
+      "id": "domain_expert_probe_20C_chunk",
+      "n_tokens_prompt": 446,
+      "padding_count": 44
+    }
+  ],
+  "padding_unit": " ."
+}

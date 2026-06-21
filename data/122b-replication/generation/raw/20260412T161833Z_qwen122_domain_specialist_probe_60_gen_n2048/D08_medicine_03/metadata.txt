@@ -1,0 +1,7 @@
+prompt_id=D08_medicine_03
+prompt=<|im_start|>user Compare antibiotics with vaccines in how they prevent or manage disease.<|im_end|> <|im_start|>assistant </think>  
+n_tokens_prompt=36
+n_tokens_generated=939
+n_layer_tensors=0
+n_router_tensors=48
+elapsed_ms=12736

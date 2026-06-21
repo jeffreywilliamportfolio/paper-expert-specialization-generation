@@ -1,0 +1,108 @@
+**Marbury v. Madison** (1803) is widely considered the most significant case in American legal history because it established the principle of **judicial review**.
+
+Here is a breakdown of why it mattered:
+
+### 1. It Established Judicial Review
+Before this case, it was unclear whether the Supreme Court had the authority to declare acts of Congress unconstitutional. Chief Justice John Marshall, writing for a unanimous court, ruled that the Judiciary Act of 1789 was partially unconstitutional because it expanded the Court's original jurisdiction beyond what was specified in Article III of the Constitution.
+
+By striking down a law passed by Congress, the Court asserted its power to interpret the Constitution and determine the validity of legislative and executive actions. This made the Constitution the supreme law of the land, enforceable by the judiciary.
+
+### 2. It Defined the Balance of Power
+The decision cemented the system of **checks and balances** among the three branches of the federal government:
+*   **Legislative Branch (Congress):** Makes laws.
+*   **Executive Branch (President):** Enforces laws.
+*   **Judicial Branch (Courts):** Interprets laws and ensures they align with the Constitution.
+
+Without *Marbury*, the Supreme Court would have remained the weakest of the three branches. This case gave the judiciary the final say on constitutional interpretation, ensuring that neither Congress nor the President could exceed their constitutional authority without judicial oversight.
+
+### 3. It Solidified the Constitution as Supreme Law
+The ruling clarified that the Constitution is not merely a set of guidelines but a binding legal document. Marshall famously wrote:
+> "It is emphatically the province and duty of the judicial department to say what the law is."
+
+This meant that if a statute conflicts with the Constitution, the Constitution prevails, and the statute is void.
+
+### Summary
+While the immediate outcome of the case was a technical victory for the Jefferson administration (William Marbury did not get his commission), the long-term legacy was the empowerment of the Supreme Court. It transformed the Court from a relatively passive body into an active arbiter of American law, a role it holds to this day.<|endoftext|><|im_start|><|im_start|><|im_start|>user
+What are the key differences between a **contract** and a **tort** in civil law?
+<|im_end|>
+<|im_start|>assistant
+<think>
+
+</think>
+
+In civil law, both **contracts** and **torts** are primary sources of obligations, but they differ fundamentally in their origin, the nature of the duty breached, and the remedies available.
+
+Here are the key differences:
+
+### 1. Origin of the Obligation
+*   **Contract**: The obligation arises from an **agreement** between two or more parties. It is based on the mutual consent (offer and acceptance) of the parties involved. The duties are **voluntary** and created by the parties themselves.
+*   **Tort**: The obligation arises from a **wrongful act** or omission imposed by law, regardless of any agreement. The duties are **involuntary** and exist because society deems certain behaviors (like driving carefully or not defaming someone) as necessary for the protection of others.
+
+### 2. Nature of the Duty
+*   **Contract**: The duty is **specific** to the parties involved. You only owe a duty to the person you signed the contract with (privity of contract). For example, if you hire a painter, you owe them money only if they paint your house as agreed.
+*   **Tort**: The duty is **general** and owed to the world at large (or a specific class of people). For example, every driver owes a duty of care to every other driver and pedestrian on the road, even if they have never met.
+
+### 3. Requirement of Intent or Agreement
+*   **Contract**: Requires a **meeting of the minds**. There must be an offer, acceptance, and consideration (something of value exchanged).
+*   **Tort**: Does not require an agreement. A tort can be **intentional** (e.g., assault), **negligent** (e.g., a car accident due to carelessness), or **strict liability** (e.g., a defective product causing injury, regardless of fault).
+
+### 4. Primary Remedy
+*   **Contract**: The goal is to put the injured party in the position they would have been in **if the contract had been performed**. This is usually achieved through **expectation damages** (monetary compensation for lost profits or the cost of completion). Specific performance (forcing the party to do what they promised) is also a common remedy.
+*   **Tort**: The goal is to put the injured party in the position they were in **before the injury occurred**. This is achieved through **compensatory damages** (covering medical bills, lost wages, pain and suffering). Punitive damages (to punish the wrongdoer) are also more common in tort cases than in contract cases.
+
+### 5. Statute of Limitations
+*   **Contract**: The time limit to sue is generally longer (often 4 to 6 years, depending on the jurisdiction and the type of contract).
+*   **Tort**: The time limit is often shorter (often 2 to 3 years), as the law encourages prompt resolution of personal injury or property damage claims.
+
+### Summary Comparison Table
+
+| Feature | Contract | Tort |
+| :--- | :--- | :--- |
+| **Source** | Agreement between parties | Law imposed on society |
+| **Duty** | Voluntary (created by parties) | Involuntary (imposed by law) |
+| **Parties** | Specific (Privity of Contract) | General (Duty to the world) |
+| **Basis of Claim** | Breach of promise | Breach of duty (negligence, intent, strict liability) |
+| **Goal of Damages** | Expectation (benefit of the bargain) | Restitution (status quo ante) |
+| **Example** | Failing to deliver goods paid for | Running a red light and hitting a car |
+
+**Note on Overlap**: In some cases, a single event can give rise to both a contract and a tort claim. For example, if a surgeon performs a surgery poorly, the patient might sue for **breach of contract** (failure to perform the agreed-upon procedure) and **medical malpractice** (a tort based on negligence). In such instances, the plaintiff usually chooses the cause of action that offers the most favorable legal outcome.<|endoftext|><|im_start|><|im_start|><|im_start|>user
+What are the key differences between a **contract** and a **tort** in civil law?
+<|im_end|>
+<|im_start>assistant
+<think>
+
+</think>
+
+In civil law, **contracts** and **torts** are the two primary sources of legal obligations, but they differ fundamentally in how those obligations arise, the nature of the duties involved, and the remedies available.
+
+Here are the key differences:
+
+### 1. Source of the Obligation
+*   **Contract**: The obligation is **voluntary** and arises from an **agreement** between two or more parties. It is based on the mutual consent (offer and acceptance) and the intention to create legal relations.
+*   **Tort**: The obligation is **involuntary** and arises from a **wrongful act** or omission imposed by law. It exists regardless of whether the parties knew each other or agreed to anything.
+
+### 2. Nature of the Duty
+*   **Contract**: The duty is **specific** to the parties involved (privity of contract). You generally only owe a duty to the person you signed the contract with.
+*   **Tort**: The duty is **general** and owed to the world at large (or a specific class of people). For example, every driver owes a duty of care to every other driver and pedestrian on the road.
+
+### 3. Basis of the Claim
+*   **Contract**: A claim is based on the **breach of a promise**. The plaintiff must prove that the defendant failed to fulfill a specific term agreed upon in the contract.
+*   **Tort**: A claim is based on the **breach of a duty of care** (or an intentional act). The plaintiff must prove that the defendant's action (or inaction) caused harm, often involving concepts like negligence, strict liability, or intentional misconduct.
+
+### 4. Purpose of Damages (Remedies)
+*   **Contract**: The goal is to place the injured party in the position they **would have been in if the contract had been performed** (Expectation Damages). The focus is on the "benefit of the bargain."
+*   **Tort**: The goal is to place the injured party in the position they **were in before the injury occurred** (Restitution/Compensatory Damages). The focus is on making the victim "whole" again regarding their loss.
+
+### 5. Requirement of Consideration
+*   **Contract**: Usually requires **consideration** (something of value exchanged, like money for goods) to be valid.
+*   **Tort**: Does not require consideration. A tort can occur even if no money changed hands between the parties.
+
+### Summary Table
+
+| Feature | Contract | Tort |
+| :--- | :--- | :--- |
+| **Origin** | Agreement (Consent) | Law (Wrongful Act) |
+| **Duty** | Specific to parties | General to society |
+| **Focus** | Promise kept vs. broken | Harm caused vs. avoided |
+| **Damages Goal** | Benefit of the bargain | Restoration to pre-injury state |
+| **Example** | F

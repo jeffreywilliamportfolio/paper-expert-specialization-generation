@@ -1,0 +1,7 @@
+prompt_id=D14_law_01
+prompt=<|im_start|>user How does constitutional law work in organizing powers, rights, and judicial review?<|im_end|> <|im_start|>assistant </think>  
+n_tokens_prompt=39
+n_tokens_generated=2048
+n_layer_tensors=0
+n_router_tensors=48
+elapsed_ms=26396

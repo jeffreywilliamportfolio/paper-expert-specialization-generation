@@ -1,0 +1,23 @@
+{
+  "run_id": "20260410T170430Z_domain_expert_probe_3chunk_token_audit",
+  "rows": [
+    {
+      "id": "domain_expert_probe_20A_chunk",
+      "n_tokens_prompt": 446,
+      "n_tokens_gen": 0
+    },
+    {
+      "id": "domain_expert_probe_20B_chunk",
+      "n_tokens_prompt": 372,
+      "n_tokens_gen": 0
+    },
+    {
+      "id": "domain_expert_probe_20C_chunk",
+      "n_tokens_prompt": 401,
+      "n_tokens_gen": 0
+    }
+  ],
+  "min_prompt_tokens": 372,
+  "max_prompt_tokens": 446,
+  "span_prompt_tokens": 74
+}

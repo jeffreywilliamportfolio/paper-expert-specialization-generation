@@ -1,0 +1,362 @@
+[
+  {
+    "id": "D01_history_01",
+    "domain": "history",
+    "prompt": "How do historians reconstruct the causes and course of World War II from archives, logistics records, intelligence reports, and command documents?",
+    "subtype": "mechanism"
+  },
+  {
+    "id": "D01_history_02",
+    "domain": "history",
+    "prompt": "Why did Ivan IV matter in Russian history, and what were his main political and military contributions?",
+    "subtype": "history"
+  },
+  {
+    "id": "D01_history_03",
+    "domain": "history",
+    "prompt": "Compare the historical impact of the September 11 attacks with the impact of Pearl Harbor on national policy and public life.",
+    "subtype": "synthesis"
+  },
+  {
+    "id": "D02_archaeology_01",
+    "domain": "archaeology",
+    "prompt": "How do archaeologists reconstruct the daily life of an ancient city from architecture, artifacts, and waste deposits?",
+    "subtype": "mechanism"
+  },
+  {
+    "id": "D02_archaeology_02",
+    "domain": "archaeology",
+    "prompt": "Why did the Rosetta Stone matter so much for archaeology and the study of ancient Egypt?",
+    "subtype": "history"
+  },
+  {
+    "id": "D02_archaeology_03",
+    "domain": "archaeology",
+    "prompt": "Compare radiocarbon dating with stratigraphy as tools for archaeological interpretation.",
+    "subtype": "synthesis"
+  },
+  {
+    "id": "D03_mathematics_01",
+    "domain": "mathematics",
+    "prompt": "How does calculus work as a mathematical framework for change, accumulation, and local approximation?",
+    "subtype": "mechanism"
+  },
+  {
+    "id": "D03_mathematics_02",
+    "domain": "mathematics",
+    "prompt": "Why did Carl Friedrich Gauss matter to number theory, geometry, and mathematical physics?",
+    "subtype": "history"
+  },
+  {
+    "id": "D03_mathematics_03",
+    "domain": "mathematics",
+    "prompt": "Compare linear algebra with calculus in terms of their roles across modern science and engineering.",
+    "subtype": "synthesis"
+  },
+  {
+    "id": "D04_statistics_01",
+    "domain": "statistics",
+    "prompt": "How does hypothesis testing work, including null models, test statistics, and error rates?",
+    "subtype": "mechanism"
+  },
+  {
+    "id": "D04_statistics_02",
+    "domain": "statistics",
+    "prompt": "Why did Bayes' theorem matter so much for the development of statistical reasoning?",
+    "subtype": "history"
+  },
+  {
+    "id": "D04_statistics_03",
+    "domain": "statistics",
+    "prompt": "Compare frequentist inference with Bayesian inference in how they treat uncertainty and evidence.",
+    "subtype": "synthesis"
+  },
+  {
+    "id": "D05_physics_01",
+    "domain": "physics",
+    "prompt": "How does thermodynamics work as a framework for energy transfer, entropy, and equilibrium?",
+    "subtype": "mechanism"
+  },
+  {
+    "id": "D05_physics_02",
+    "domain": "physics",
+    "prompt": "Why did Albert Einstein matter so much to relativity, quantum theory, and modern physics?",
+    "subtype": "history"
+  },
+  {
+    "id": "D05_physics_03",
+    "domain": "physics",
+    "prompt": "Compare the Standard Model with general relativity in what each explains and what each leaves unresolved.",
+    "subtype": "synthesis"
+  },
+  {
+    "id": "D06_chemistry_01",
+    "domain": "chemistry",
+    "prompt": "How does chemical bonding work across ionic, covalent, and metallic interactions?",
+    "subtype": "mechanism"
+  },
+  {
+    "id": "D06_chemistry_02",
+    "domain": "chemistry",
+    "prompt": "Why did Dmitri Mendeleev matter to chemistry and the development of the periodic table?",
+    "subtype": "history"
+  },
+  {
+    "id": "D06_chemistry_03",
+    "domain": "chemistry",
+    "prompt": "Compare reaction kinetics with chemical equilibrium in how chemists analyze reactions.",
+    "subtype": "synthesis"
+  },
+  {
+    "id": "D07_biology_01",
+    "domain": "biology",
+    "prompt": "How does evolution by natural selection work, including variation, inheritance, and selection pressure?",
+    "subtype": "mechanism"
+  },
+  {
+    "id": "D07_biology_02",
+    "domain": "biology",
+    "prompt": "Why did Charles Darwin matter so much to biological science?",
+    "subtype": "history"
+  },
+  {
+    "id": "D07_biology_03",
+    "domain": "biology",
+    "prompt": "Compare classical genetics with molecular biology in how each explains heredity.",
+    "subtype": "synthesis"
+  },
+  {
+    "id": "D08_medicine_01",
+    "domain": "medicine",
+    "prompt": "How does sepsis develop and why is it medically dangerous?",
+    "subtype": "mechanism"
+  },
+  {
+    "id": "D08_medicine_02",
+    "domain": "medicine",
+    "prompt": "Why did Ignaz Semmelweis matter to medicine and infection control?",
+    "subtype": "history"
+  },
+  {
+    "id": "D08_medicine_03",
+    "domain": "medicine",
+    "prompt": "Compare antibiotics with vaccines in how they prevent or manage disease.",
+    "subtype": "synthesis"
+  },
+  {
+    "id": "D09_neuroscience_01",
+    "domain": "neuroscience",
+    "prompt": "How does synaptic transmission work, including neurotransmitters, receptors, and plasticity?",
+    "subtype": "mechanism"
+  },
+  {
+    "id": "D09_neuroscience_02",
+    "domain": "neuroscience",
+    "prompt": "Why did Santiago Ramon y Cajal matter to neuroscience?",
+    "subtype": "history"
+  },
+  {
+    "id": "D09_neuroscience_03",
+    "domain": "neuroscience",
+    "prompt": "Compare brain imaging with electrophysiology in the kind of evidence each provides about the brain.",
+    "subtype": "synthesis"
+  },
+  {
+    "id": "D10_computer_science_01",
+    "domain": "computer_science",
+    "prompt": "How do algorithms and computational complexity work as core ideas in computer science?",
+    "subtype": "mechanism"
+  },
+  {
+    "id": "D10_computer_science_02",
+    "domain": "computer_science",
+    "prompt": "Why did Alan Turing matter to computer science, computation, and artificial intelligence?",
+    "subtype": "history"
+  },
+  {
+    "id": "D10_computer_science_03",
+    "domain": "computer_science",
+    "prompt": "Compare data structures with algorithms in the role each plays in computer science.",
+    "subtype": "synthesis"
+  },
+  {
+    "id": "D11_software_engineering_01",
+    "domain": "software_engineering",
+    "prompt": "How does a software engineering process move from requirements to architecture, testing, deployment, and maintenance?",
+    "subtype": "mechanism"
+  },
+  {
+    "id": "D11_software_engineering_02",
+    "domain": "software_engineering",
+    "prompt": "Why did the Agile Manifesto matter to software development practice?",
+    "subtype": "history"
+  },
+  {
+    "id": "D11_software_engineering_03",
+    "domain": "software_engineering",
+    "prompt": "Compare version control with continuous integration in how they support reliable software delivery.",
+    "subtype": "synthesis"
+  },
+  {
+    "id": "D12_cybersecurity_01",
+    "domain": "cybersecurity",
+    "prompt": "How does public key cryptography work, including key exchange, signatures, and trust?",
+    "subtype": "mechanism"
+  },
+  {
+    "id": "D12_cybersecurity_02",
+    "domain": "cybersecurity",
+    "prompt": "Why did the Morris worm matter in the history of cybersecurity?",
+    "subtype": "history"
+  },
+  {
+    "id": "D12_cybersecurity_03",
+    "domain": "cybersecurity",
+    "prompt": "Compare authentication with access control in practical cybersecurity systems.",
+    "subtype": "synthesis"
+  },
+  {
+    "id": "D13_economics_01",
+    "domain": "economics",
+    "prompt": "How does inflation work, including monetary policy, expectations, and supply constraints?",
+    "subtype": "mechanism"
+  },
+  {
+    "id": "D13_economics_02",
+    "domain": "economics",
+    "prompt": "Why did John Maynard Keynes matter to economics and macroeconomic policy?",
+    "subtype": "history"
+  },
+  {
+    "id": "D13_economics_03",
+    "domain": "economics",
+    "prompt": "Compare the 2008 financial crisis with the Great Depression in economic mechanism and policy response.",
+    "subtype": "synthesis"
+  },
+  {
+    "id": "D14_law_01",
+    "domain": "law",
+    "prompt": "How does constitutional law work in organizing powers, rights, and judicial review?",
+    "subtype": "mechanism"
+  },
+  {
+    "id": "D14_law_02",
+    "domain": "law",
+    "prompt": "Why did Marbury v. Madison matter in legal history?",
+    "subtype": "history"
+  },
+  {
+    "id": "D14_law_03",
+    "domain": "law",
+    "prompt": "Compare precedent with statutory interpretation in modern legal reasoning.",
+    "subtype": "synthesis"
+  },
+  {
+    "id": "D15_political_science_01",
+    "domain": "political_science",
+    "prompt": "How do democratic institutions work, including elections, parties, and checks and balances?",
+    "subtype": "mechanism"
+  },
+  {
+    "id": "D15_political_science_02",
+    "domain": "political_science",
+    "prompt": "Why did Niccolo Machiavelli matter to political thought and statecraft?",
+    "subtype": "history"
+  },
+  {
+    "id": "D15_political_science_03",
+    "domain": "political_science",
+    "prompt": "Compare nationalism with liberalism as organizing ideas in modern political systems.",
+    "subtype": "synthesis"
+  },
+  {
+    "id": "D16_philosophy_01",
+    "domain": "philosophy",
+    "prompt": "How does epistemology work as a field concerned with justification, belief, and knowledge?",
+    "subtype": "mechanism"
+  },
+  {
+    "id": "D16_philosophy_02",
+    "domain": "philosophy",
+    "prompt": "Why did Immanuel Kant matter to metaphysics, ethics, and epistemology?",
+    "subtype": "history"
+  },
+  {
+    "id": "D16_philosophy_03",
+    "domain": "philosophy",
+    "prompt": "Compare philosophy of mind with metaphysics in the kinds of questions each asks.",
+    "subtype": "synthesis"
+  },
+  {
+    "id": "D17_comparative_religion_01",
+    "domain": "comparative_religion",
+    "prompt": "How does comparative religion study ritual, doctrine, scripture, and social context across different traditions?",
+    "subtype": "mechanism"
+  },
+  {
+    "id": "D17_comparative_religion_02",
+    "domain": "comparative_religion",
+    "prompt": "Why did the Buddha matter historically, and how did Buddhist traditions diversify over time?",
+    "subtype": "history"
+  },
+  {
+    "id": "D17_comparative_religion_03",
+    "domain": "comparative_religion",
+    "prompt": "Compare monotheistic traditions with non-theistic traditions in theology and practice.",
+    "subtype": "synthesis"
+  },
+  {
+    "id": "D18_linguistics_01",
+    "domain": "linguistics",
+    "prompt": "How does syntax work, including phrase structure, dependency, and recursion?",
+    "subtype": "mechanism"
+  },
+  {
+    "id": "D18_linguistics_02",
+    "domain": "linguistics",
+    "prompt": "Why did Ferdinand de Saussure matter to linguistics and structural analysis?",
+    "subtype": "history"
+  },
+  {
+    "id": "D18_linguistics_03",
+    "domain": "linguistics",
+    "prompt": "Compare phonology with syntax in the kinds of linguistic structure each studies.",
+    "subtype": "synthesis"
+  },
+  {
+    "id": "D19_psychology_01",
+    "domain": "psychology",
+    "prompt": "How does memory work, including encoding, storage, retrieval, and bias?",
+    "subtype": "mechanism"
+  },
+  {
+    "id": "D19_psychology_02",
+    "domain": "psychology",
+    "prompt": "Why did William James matter to psychology?",
+    "subtype": "history"
+  },
+  {
+    "id": "D19_psychology_03",
+    "domain": "psychology",
+    "prompt": "Compare cognition with emotion in how psychology explains behavior.",
+    "subtype": "synthesis"
+  },
+  {
+    "id": "D20_environmental_science_01",
+    "domain": "environmental_science",
+    "prompt": "How do climate systems work, including feedback loops, carbon cycling, and radiative forcing?",
+    "subtype": "mechanism"
+  },
+  {
+    "id": "D20_environmental_science_02",
+    "domain": "environmental_science",
+    "prompt": "Why did Rachel Carson matter to environmental science and public awareness?",
+    "subtype": "history"
+  },
+  {
+    "id": "D20_environmental_science_03",
+    "domain": "environmental_science",
+    "prompt": "Compare ecology with environmental chemistry in how each approaches environmental risk assessment.",
+    "subtype": "synthesis"
+  }
+]

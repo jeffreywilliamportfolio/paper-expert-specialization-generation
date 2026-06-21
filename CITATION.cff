@@ -1,0 +1,48 @@
+cff-version: 1.2.0
+message: "If you use this work, please cite it as below."
+title: "The Generation Half: Why Prompt-Routing Studies Understate Domain Specialization in Mixture-of-Experts Models"
+abstract: >-
+  A widely cited reading of mixture-of-experts (MoE) language models holds that
+  their experts do not specialize by subject matter: routing measured over
+  supplied text spreads each expert across many topics. This reading rests on
+  half of the forward pass. A transformer routes tokens in two regimes -- a
+  parallel prefill pass that reads the prompt and a step-by-step generation pass
+  that writes the answer -- and supplied-text routing is the prefill half. Over
+  prefill a single high-frequency expert wins almost every domain and routing
+  looks domain-blind; over generation the winners disperse and most domains
+  acquire their own leading expert. The shift survives a length-matched control
+  and reproduces in a second, larger model with unrelated expert indices. Domain
+  specialization in these models is largely a property of the generation pass,
+  and routing read off prefill or pooled across passes understates it.
+type: dataset
+authors:
+  - family-names: Shorthill
+    given-names: "Jeffrey W."
+    affiliation: "Independent researcher"
+    email: jws299792@icloud.com
+    orcid: "https://orcid.org/0009-0004-3954-2752"
+version: "1.0"
+date-released: "2026-06-20"
+license: CC-BY-4.0
+url: "https://github.com/jeffreywilliamportfolio/paper-expert-specialization-generation"
+repository-code: "https://github.com/jeffreywilliamportfolio/paper-expert-specialization-generation"
+keywords:
+  - mixture-of-experts
+  - expert specialization
+  - routing
+  - prefill
+  - generation
+  - autoregressive decoding
+  - interpretability
+  - language models
+preferred-citation:
+  type: article
+  title: "The Generation Half: Why Prompt-Routing Studies Understate Domain Specialization in Mixture-of-Experts Models"
+  authors:
+    - family-names: Shorthill
+      given-names: "Jeffrey W."
+      affiliation: "Independent researcher"
+      orcid: "https://orcid.org/0009-0004-3954-2752"
+  year: 2026
+  month: 6
+  notes: "Preprint, version 1.0. Not peer reviewed."

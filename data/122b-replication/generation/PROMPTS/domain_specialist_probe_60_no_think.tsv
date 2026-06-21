@@ -1,0 +1,60 @@
+D01_history_01	<|im_start|>user\nHow do historians reconstruct the causes and course of World War II from archives, logistics records, intelligence reports, and command documents?<|im_end|>\n<|im_start|>assistant\n</think>\n\n
+D01_history_02	<|im_start|>user\nWhy did Ivan IV matter in Russian history, and what were his main political and military contributions?<|im_end|>\n<|im_start|>assistant\n</think>\n\n
+D01_history_03	<|im_start|>user\nCompare the historical impact of the September 11 attacks with the impact of Pearl Harbor on national policy and public life.<|im_end|>\n<|im_start|>assistant\n</think>\n\n
+D02_archaeology_01	<|im_start|>user\nHow do archaeologists reconstruct the daily life of an ancient city from architecture, artifacts, and waste deposits?<|im_end|>\n<|im_start|>assistant\n</think>\n\n
+D02_archaeology_02	<|im_start|>user\nWhy did the Rosetta Stone matter so much for archaeology and the study of ancient Egypt?<|im_end|>\n<|im_start|>assistant\n</think>\n\n
+D02_archaeology_03	<|im_start|>user\nCompare radiocarbon dating with stratigraphy as tools for archaeological interpretation.<|im_end|>\n<|im_start|>assistant\n</think>\n\n
+D03_mathematics_01	<|im_start|>user\nHow does calculus work as a mathematical framework for change, accumulation, and local approximation?<|im_end|>\n<|im_start|>assistant\n</think>\n\n
+D03_mathematics_02	<|im_start|>user\nWhy did Carl Friedrich Gauss matter to number theory, geometry, and mathematical physics?<|im_end|>\n<|im_start|>assistant\n</think>\n\n
+D03_mathematics_03	<|im_start|>user\nCompare linear algebra with calculus in terms of their roles across modern science and engineering.<|im_end|>\n<|im_start|>assistant\n</think>\n\n
+D04_statistics_01	<|im_start|>user\nHow does hypothesis testing work, including null models, test statistics, and error rates?<|im_end|>\n<|im_start|>assistant\n</think>\n\n
+D04_statistics_02	<|im_start|>user\nWhy did Bayes' theorem matter so much for the development of statistical reasoning?<|im_end|>\n<|im_start|>assistant\n</think>\n\n
+D04_statistics_03	<|im_start|>user\nCompare frequentist inference with Bayesian inference in how they treat uncertainty and evidence.<|im_end|>\n<|im_start|>assistant\n</think>\n\n
+D05_physics_01	<|im_start|>user\nHow does thermodynamics work as a framework for energy transfer, entropy, and equilibrium?<|im_end|>\n<|im_start|>assistant\n</think>\n\n
+D05_physics_02	<|im_start|>user\nWhy did Albert Einstein matter so much to relativity, quantum theory, and modern physics?<|im_end|>\n<|im_start|>assistant\n</think>\n\n
+D05_physics_03	<|im_start|>user\nCompare the Standard Model with general relativity in what each explains and what each leaves unresolved.<|im_end|>\n<|im_start|>assistant\n</think>\n\n
+D06_chemistry_01	<|im_start|>user\nHow does chemical bonding work across ionic, covalent, and metallic interactions?<|im_end|>\n<|im_start|>assistant\n</think>\n\n
+D06_chemistry_02	<|im_start|>user\nWhy did Dmitri Mendeleev matter to chemistry and the development of the periodic table?<|im_end|>\n<|im_start|>assistant\n</think>\n\n
+D06_chemistry_03	<|im_start|>user\nCompare reaction kinetics with chemical equilibrium in how chemists analyze reactions.<|im_end|>\n<|im_start|>assistant\n</think>\n\n
+D07_biology_01	<|im_start|>user\nHow does evolution by natural selection work, including variation, inheritance, and selection pressure?<|im_end|>\n<|im_start|>assistant\n</think>\n\n
+D07_biology_02	<|im_start|>user\nWhy did Charles Darwin matter so much to biological science?<|im_end|>\n<|im_start|>assistant\n</think>\n\n
+D07_biology_03	<|im_start|>user\nCompare classical genetics with molecular biology in how each explains heredity.<|im_end|>\n<|im_start|>assistant\n</think>\n\n
+D08_medicine_01	<|im_start|>user\nHow does sepsis develop and why is it medically dangerous?<|im_end|>\n<|im_start|>assistant\n</think>\n\n
+D08_medicine_02	<|im_start|>user\nWhy did Ignaz Semmelweis matter to medicine and infection control?<|im_end|>\n<|im_start|>assistant\n</think>\n\n
+D08_medicine_03	<|im_start|>user\nCompare antibiotics with vaccines in how they prevent or manage disease.<|im_end|>\n<|im_start|>assistant\n</think>\n\n
+D09_neuroscience_01	<|im_start|>user\nHow does synaptic transmission work, including neurotransmitters, receptors, and plasticity?<|im_end|>\n<|im_start|>assistant\n</think>\n\n
+D09_neuroscience_02	<|im_start|>user\nWhy did Santiago Ramon y Cajal matter to neuroscience?<|im_end|>\n<|im_start|>assistant\n</think>\n\n
+D09_neuroscience_03	<|im_start|>user\nCompare brain imaging with electrophysiology in the kind of evidence each provides about the brain.<|im_end|>\n<|im_start|>assistant\n</think>\n\n
+D10_computer_science_01	<|im_start|>user\nHow do algorithms and computational complexity work as core ideas in computer science?<|im_end|>\n<|im_start|>assistant\n</think>\n\n
+D10_computer_science_02	<|im_start|>user\nWhy did Alan Turing matter to computer science, computation, and artificial intelligence?<|im_end|>\n<|im_start|>assistant\n</think>\n\n
+D10_computer_science_03	<|im_start|>user\nCompare data structures with algorithms in the role each plays in computer science.<|im_end|>\n<|im_start|>assistant\n</think>\n\n
+D11_software_engineering_01	<|im_start|>user\nHow does a software engineering process move from requirements to architecture, testing, deployment, and maintenance?<|im_end|>\n<|im_start|>assistant\n</think>\n\n
+D11_software_engineering_02	<|im_start|>user\nWhy did the Agile Manifesto matter to software development practice?<|im_end|>\n<|im_start|>assistant\n</think>\n\n
+D11_software_engineering_03	<|im_start|>user\nCompare version control with continuous integration in how they support reliable software delivery.<|im_end|>\n<|im_start|>assistant\n</think>\n\n
+D12_cybersecurity_01	<|im_start|>user\nHow does public key cryptography work, including key exchange, signatures, and trust?<|im_end|>\n<|im_start|>assistant\n</think>\n\n
+D12_cybersecurity_02	<|im_start|>user\nWhy did the Morris worm matter in the history of cybersecurity?<|im_end|>\n<|im_start|>assistant\n</think>\n\n
+D12_cybersecurity_03	<|im_start|>user\nCompare authentication with access control in practical cybersecurity systems.<|im_end|>\n<|im_start|>assistant\n</think>\n\n
+D13_economics_01	<|im_start|>user\nHow does inflation work, including monetary policy, expectations, and supply constraints?<|im_end|>\n<|im_start|>assistant\n</think>\n\n
+D13_economics_02	<|im_start|>user\nWhy did John Maynard Keynes matter to economics and macroeconomic policy?<|im_end|>\n<|im_start|>assistant\n</think>\n\n
+D13_economics_03	<|im_start|>user\nCompare the 2008 financial crisis with the Great Depression in economic mechanism and policy response.<|im_end|>\n<|im_start|>assistant\n</think>\n\n
+D14_law_01	<|im_start|>user\nHow does constitutional law work in organizing powers, rights, and judicial review?<|im_end|>\n<|im_start|>assistant\n</think>\n\n
+D14_law_02	<|im_start|>user\nWhy did Marbury v. Madison matter in legal history?<|im_end|>\n<|im_start|>assistant\n</think>\n\n
+D14_law_03	<|im_start|>user\nCompare precedent with statutory interpretation in modern legal reasoning.<|im_end|>\n<|im_start|>assistant\n</think>\n\n
+D15_political_science_01	<|im_start|>user\nHow do democratic institutions work, including elections, parties, and checks and balances?<|im_end|>\n<|im_start|>assistant\n</think>\n\n
+D15_political_science_02	<|im_start|>user\nWhy did Niccolo Machiavelli matter to political thought and statecraft?<|im_end|>\n<|im_start|>assistant\n</think>\n\n
+D15_political_science_03	<|im_start|>user\nCompare nationalism with liberalism as organizing ideas in modern political systems.<|im_end|>\n<|im_start|>assistant\n</think>\n\n
+D16_philosophy_01	<|im_start|>user\nHow does epistemology work as a field concerned with justification, belief, and knowledge?<|im_end|>\n<|im_start|>assistant\n</think>\n\n
+D16_philosophy_02	<|im_start|>user\nWhy did Immanuel Kant matter to metaphysics, ethics, and epistemology?<|im_end|>\n<|im_start|>assistant\n</think>\n\n
+D16_philosophy_03	<|im_start|>user\nCompare philosophy of mind with metaphysics in the kinds of questions each asks.<|im_end|>\n<|im_start|>assistant\n</think>\n\n
+D17_comparative_religion_01	<|im_start|>user\nHow does comparative religion study ritual, doctrine, scripture, and social context across different traditions?<|im_end|>\n<|im_start|>assistant\n</think>\n\n
+D17_comparative_religion_02	<|im_start|>user\nWhy did the Buddha matter historically, and how did Buddhist traditions diversify over time?<|im_end|>\n<|im_start|>assistant\n</think>\n\n
+D17_comparative_religion_03	<|im_start|>user\nCompare monotheistic traditions with non-theistic traditions in theology and practice.<|im_end|>\n<|im_start|>assistant\n</think>\n\n
+D18_linguistics_01	<|im_start|>user\nHow does syntax work, including phrase structure, dependency, and recursion?<|im_end|>\n<|im_start|>assistant\n</think>\n\n
+D18_linguistics_02	<|im_start|>user\nWhy did Ferdinand de Saussure matter to linguistics and structural analysis?<|im_end|>\n<|im_start|>assistant\n</think>\n\n
+D18_linguistics_03	<|im_start|>user\nCompare phonology with syntax in the kinds of linguistic structure each studies.<|im_end|>\n<|im_start|>assistant\n</think>\n\n
+D19_psychology_01	<|im_start|>user\nHow does memory work, including encoding, storage, retrieval, and bias?<|im_end|>\n<|im_start|>assistant\n</think>\n\n
+D19_psychology_02	<|im_start|>user\nWhy did William James matter to psychology?<|im_end|>\n<|im_start|>assistant\n</think>\n\n
+D19_psychology_03	<|im_start|>user\nCompare cognition with emotion in how psychology explains behavior.<|im_end|>\n<|im_start|>assistant\n</think>\n\n
+D20_environmental_science_01	<|im_start|>user\nHow do climate systems work, including feedback loops, carbon cycling, and radiative forcing?<|im_end|>\n<|im_start|>assistant\n</think>\n\n
+D20_environmental_science_02	<|im_start|>user\nWhy did Rachel Carson matter to environmental science and public awareness?<|im_end|>\n<|im_start|>assistant\n</think>\n\n
+D20_environmental_science_03	<|im_start|>user\nCompare ecology with environmental chemistry in how each approaches environmental risk assessment.<|im_end|>\n<|im_start|>assistant\n</think>\n\n

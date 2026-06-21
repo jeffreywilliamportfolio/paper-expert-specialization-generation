@@ -1,0 +1,7 @@
+prompt_id=D03_mathematics_02
+prompt=<|im_start|>user Why did Carl Friedrich Gauss matter to number theory, geometry, and mathematical physics?<|im_end|> <|im_start|>assistant </think>  
+n_tokens_prompt=40
+n_tokens_generated=2048
+n_layer_tensors=0
+n_router_tensors=48
+elapsed_ms=26379

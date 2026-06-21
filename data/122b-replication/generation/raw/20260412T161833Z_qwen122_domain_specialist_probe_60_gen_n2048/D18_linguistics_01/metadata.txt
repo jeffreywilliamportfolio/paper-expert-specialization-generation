@@ -1,0 +1,7 @@
+prompt_id=D18_linguistics_01
+prompt=<|im_start|>user How does syntax work, including phrase structure, dependency, and recursion?<|im_end|> <|im_start|>assistant </think>  
+n_tokens_prompt=38
+n_tokens_generated=1228
+n_layer_tensors=0
+n_router_tensors=48
+elapsed_ms=15839

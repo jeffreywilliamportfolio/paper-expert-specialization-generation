@@ -1,0 +1,7 @@
+prompt_id=D04_statistics_02
+prompt=<|im_start|>user Why did Bayes' theorem matter so much for the development of statistical reasoning?<|im_end|> <|im_start|>assistant </think>  
+n_tokens_prompt=40
+n_tokens_generated=0
+n_layer_tensors=0
+n_router_tensors=48
+elapsed_ms=92

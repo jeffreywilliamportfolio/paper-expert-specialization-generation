@@ -1,0 +1,7 @@
+prompt_id=D12_cybersecurity_02
+prompt=<|im_start|>user Why did the Morris worm matter in the history of cybersecurity?<|im_end|> <|im_start|>assistant </think>  
+n_tokens_prompt=36
+n_tokens_generated=2048
+n_layer_tensors=0
+n_router_tensors=48
+elapsed_ms=26372

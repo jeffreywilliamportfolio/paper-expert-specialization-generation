@@ -1,0 +1,7 @@
+prompt_id=D10_computer_science_03
+prompt=<|im_start|>user Compare data structures with algorithms in the role each plays in computer science.<|im_end|> <|im_start|>assistant </think>  
+n_tokens_prompt=38
+n_tokens_generated=1001
+n_layer_tensors=0
+n_router_tensors=48
+elapsed_ms=12912

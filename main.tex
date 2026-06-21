@@ -1,0 +1,553 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{lmodern}
+\usepackage[T1]{fontenc}
+\usepackage{microtype}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{caption}
+\usepackage[round]{natbib}
+\usepackage[hidelinks]{hyperref}
+
+\hypersetup{
+  pdftitle={The Generation Half: Why Prompt-Routing Studies Understate Domain Specialization in Mixture-of-Experts Models},
+  pdfauthor={Jeffrey Shorthill},
+  pdfkeywords={mixture-of-experts, expert specialization, routing, prefill, generation, autoregressive decoding, language models, interpretability}
+}
+
+\captionsetup{font=small,labelfont=bf}
+\setlength{\parskip}{0.35em}
+
+\title{\textbf{The Generation Half: Why Prompt-Routing Studies\\
+Understate Domain Specialization in Mixture-of-Experts Models}}
+\author{Jeffrey Shorthill\thanks{Independent researcher. Correspondence:
+\texttt{jws299792@icloud.com}. This is version~1.0 (June~2026),
+released under CC~BY~4.0. Data, code, and a claim-by-claim source index
+accompany the paper; see the Data and Code Availability statement.}}
+\date{Version 1.0 --- June 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+A widely cited reading of mixture-of-experts (MoE) language models holds that
+their experts do not specialize by subject matter: routing measured over supplied
+text spreads each expert across many topics, with chemistry, law, and the rest
+sharing the same few high-frequency experts. We show that this reading rests on
+half of the forward pass. A transformer routes tokens in two regimes: a parallel
+prefill pass that reads the prompt, and a step-by-step generation pass that writes
+the answer, and supplied-text routing is the prefill half. Across a suite of
+prompts spanning twenty academic domains, we identify the expert that receives the
+most routing weight in each domain, separately for each pass. Over prefill a
+single high-frequency expert wins almost every domain and routing looks
+domain-blind, reproducing the familiar negative picture. Over generation the
+winners disperse and most domains acquire their own leading expert. The shift is
+large and one-directional, survives a control that pads all prompts to a common
+length, and reproduces in a second, larger model whose expert indices are entirely
+different while the prefill-concentrated, generation-dispersed pattern holds. The
+upshot is a correction to how prior negative results should be read: prefill is the
+half the field measured, generation is the half it missed, and domain
+specialization in these models is largely a property of the generation pass.
+\end{abstract}
+
+\noindent\textbf{Keywords:} mixture-of-experts; expert specialization; routing;
+prefill; generation; autoregressive decoding; interpretability.
+
+\section{Introduction}
+\label{sec:intro}
+
+Mixture-of-experts (MoE) layers replace a dense feed-forward block with many
+parallel expert blocks and a router that, for each token, selects a few of them.
+Only the selected experts run, so the model can hold a large parameter count
+while keeping per-token compute small. Because the router makes a discrete,
+inspectable choice at every token, it invites a natural question: do the experts
+carve knowledge up by subject, so that one becomes the chemistry expert and
+another the law expert? The most-cited look came up empty.
+\citet{jiang2024mixtral}, analyzing Mixtral's routing on validation text,
+``do not observe obvious patterns in the assignment of experts based on the
+topic''; the structure they find is syntactic and positional. That negative result
+is load-bearing: it is widely read as evidence that MoE experts simply do not
+specialize by domain.
+
+That look, and most like it, scored routing over supplied text. A transformer
+processes a sequence in two distinct regimes. During \emph{prefill}, the whole
+prompt is processed in parallel to populate the key/value cache. During
+\emph{generation}, output tokens are produced one at a time, each attending to
+everything before it. Supplied-text routing is the prefill regime. Routing happens
+in both passes, and the two are free to disagree. They disagree in a specific,
+consistent way, and that disagreement decides whether domain specialization is
+visible.
+
+We route a domain-balanced prompt suite through two MoE models and, for each of
+twenty domains, identify the expert that receives the most routing weight,
+once over prefill positions and once over generated positions. Over prefill, one
+generalist expert wins $18$ of $20$ domains in the smaller model and $13$ of $20$
+in the larger one, and routing looks domain-blind, reproducing the familiar
+picture. Over generation, the winners disperse: nearly every domain is won by its
+own distinct expert, and the generalist recedes. The same expert that looked like
+``the answer to everything'' while the model read the prompt gives way to
+per-domain leaders once it begins to write.
+
+What each expert encodes stays outside our scope, and we do not re-measure Mixtral.
+The result is about \emph{where} in the forward process domain structure becomes
+measurable: prefill is the half the field measured, and generation is the half it
+missed. The canonical negative result holds for the prefill half it measured; it has
+been read too broadly, as a verdict on specialization, because supplied-text routing
+is domain-blind by construction of where it looks.
+
+This paper makes three contributions. (1)~We draw a methodological correction:
+reading expert specialization off prefill or supplied-text routing, or off routing
+pooled across passes, systematically understates it, which reframes how the field's
+negative results on MoE specialization should be read. (2)~We establish the effect
+that drives the correction: separating routing by forward-pass regime, prefill
+versus generation, places domain specialization in the generation pass and shows it
+largely absent from prefill, measured as the concentration of per-domain expert
+winners. (3)~We show the effect survives a length-matched control that equalizes
+token counts across the two passes, and that it reproduces in a second, larger model
+whose expert indices do not correspond to the first.
+
+\section{Related work}
+\label{sec:related}
+
+\paragraph{Mixture-of-experts routing.}
+The mixture-of-experts construction routes inputs to specialized subnetworks
+through a learned gate \citep{jacobs1991adaptive}. \citet{shazeer2017outrageously}
+made this sparse and scalable for deep networks with a top-$k$ gate over thousands
+of experts, and the design was carried into large transformers by Switch
+Transformers \citep{fedus2022switch} and ST-MoE \citep{zoph2022stmoe}. The models
+we study are open MoE checkpoints in the Qwen3 lineage \citep{yang2025qwen3}.
+Across this line of work the router exposes an inspectable choice at every token,
+tempting a reading of it as a map of internal organization.
+
+\paragraph{Do experts specialize by topic?}
+This question is the paper's starting point, and the most-cited answer is negative.
+\citet{jiang2024mixtral} analyze Mixtral's routing on validation text and report
+that they ``do not observe obvious patterns in the assignment of experts based on
+the topic'': the expert distribution is similar across arXiv, biomedical, and
+philosophy documents, with structure instead in syntax and token position. The
+statement is carefully scoped to what it measured --- routing over supplied text,
+which is the prefill regime --- and it has since hardened, in looser uptake, into
+the broader belief that MoE experts do not specialize by domain.
+\citet{dai2024deepseekmoe} reach a compatible intuition from the engineering side:
+they treat strong specialization as something to build in, through fine-grained
+expert segmentation and shared-expert isolation, which presumes that ordinary
+top-$k$ routing specializes weakly. Our measurement extends the first result and
+qualifies the second. Read over prefill we, too, see little domain structure; the
+same probe read over the generation pass resolves into per-domain experts. The
+delta to \citet{jiang2024mixtral} is the axis of measurement: the forward-pass
+regime.
+
+\paragraph{Input- and token-dependent routing.}
+Recent work shows routing depends strongly on the input.
+\citet{mynampati2026taskconditioned} construct ``routing signatures'' and recover
+task identity from routing alone with high accuracy, establishing that the router
+is task-sensitive; and \citet{hayashi2026layerwise}, working with the same
+Qwen3.5-35B-A3B checkpoint we use, find that routing during code generation is
+strongly token-identity dependent and layer-dependent. Both condition on \emph{what}
+is being processed (task or token), pooled within a regime; neither contrasts the
+prefill and generation passes for the same prompts, which is the comparison we make.
+
+\paragraph{Prefill versus generation.}
+The two-pass structure of transformer inference (a parallel prefill over the prompt
+followed by step-by-step decoding) is well established on the systems side, where the
+two phases have distinct compute and latency profiles and are increasingly served
+separately \citep{kwon2023pagedattention,zhong2024distserve}. We use the same
+distinction representationally: the two passes route to different experts, and the
+difference is where domain specialization becomes measurable.
+
+\section{Why prefill routing is a tempting place to look}
+\label{sec:whyprefill}
+
+There are practical reasons an analyst reaches for prefill routing first. Prefill
+is deterministic: the same prompt and the same weights produce the same router
+logits, with no sampling in the loop, so prefill statistics are exactly
+reproducible and easy to compare across runs. Prefill is also cheap to capture: a
+single forward pass over a short prompt yields one routing vector per token, no
+generation required. And prefill is where the prompt's content actually
+sits, so it is intuitive to expect topical routing to be strongest exactly there,
+while the model is ``looking at'' the chemistry question.
+
+The measurement below shows that this intuition is inverted. The content of the
+prompt is present during prefill, but the routing over prefill positions is
+dominated by a few generic experts and is largely blind to domain. The
+domain-specific structure appears later, while the model is producing
+domain-specific text. The reasons we can offer for this are partial
+(Section~\ref{sec:interp}), but the empirical pattern is clean enough to state on
+its own and to act on.
+
+\section{Methods}
+\label{sec:methods}
+
+\paragraph{Probe.}
+The prompt suite contains $60$ short questions covering $20$ academic domains
+(archaeology, biology, chemistry, comparative religion, computer science,
+cybersecurity, economics, environmental science, history, law, linguistics,
+mathematics, medicine, neuroscience, philosophy, physics, political science,
+psychology, software engineering, statistics), with $3$ questions per domain. Each
+question is a plain, domain-typical prompt (for example, a request to contrast two
+core concepts in the field).
+
+\paragraph{Models.}
+We use two MoE checkpoints from the same Qwen3.5 lineage
+\citep{yang2025qwen3}, both 8-bit quantized fine-tunes (HauhauCS ``uncensored''
+variants): a 35B-parameter model with $\approx
+3$B active per token, and a 122B-parameter model with $\approx 10$B active. Both
+route each token to the top $8$ of $256$ experts per MoE layer. The two models
+have different layer counts and different internal layouts, so their expert
+indices are not comparable to each other; an expert numbered $114$ in one model
+has nothing to do with expert $114$ in the other. Decoding is greedy. Generation
+is capped (at $2{,}048$--$2{,}056$ new tokens); we return to the consequences of
+that cap in Section~\ref{sec:limits}.
+
+\paragraph{Routing reconstruction.}
+For each token we take the router's pre-softmax logits over all $256$ experts,
+apply softmax, keep the top $8$, and renormalize over the selected experts so the
+eight weights sum to one. For an expert $e$ on a fixed set of tokens (one pass of
+one prompt at one layer) we form three reductions of these renormalized weights:
+$S_e$, the fraction of tokens on which $e$ is selected; $Q_e$, its mean weight on
+the tokens where it is selected; and $W_e$, its mean weight over all tokens (zero
+where unselected). Because all three reduce the same weights, $W_e = S_e\,Q_e$
+holds exactly on any single token set; we use this only as a bookkeeping check that
+the selection mask, the conditional mean, and the marginal mean are mutually
+consistent, and find $\max_e\lvert W_e - S_e Q_e\rvert \le 5.6\times10^{-17}$
+across all capture cells. The identity is not expected to survive averaging across
+prompts: where a per-domain or overall $W$, $S$, and $Q$ is reported (in the
+accompanying tables, not in this paper), each is a separate mean over the domain's
+prompts and the model's layers, so the tabulated $S$ and $Q$ are marginal means
+whose product differs from the tabulated $W$ by the across-prompt $S$--$Q$
+covariance. Domain winners are ranked by $W$, the mean routed weight per token,
+which is well defined regardless of the decomposition.
+
+\paragraph{The two passes.}
+For each prompt we partition its token positions into the prefill block (the
+prompt tokens) and the generation block (the tokens the model produced). All
+routing statistics are computed within one block or the other, never pooled
+across them. For each domain we then form the per-domain mean of $W_e$ over that
+domain's three prompts and call the highest-$W$ expert the \emph{domain winner}.
+This yields, per model and per pass, a list of $20$ domain winners. The analysis
+in this paper is almost entirely about how those two lists differ.
+
+\paragraph{Concentration of a winner list.}
+To summarize a list of $20$ winners we use three numbers. The \emph{distinct
+count} is how many different experts appear. \emph{Max wins} is the number of
+domains taken by the single most frequent winner. And the normalized entropy of
+the winner distribution, $H = -\sum_i p_i \log_2 p_i / \log_2 20$ where $p_i$ is
+the fraction of domains won by expert~$i$, runs from $0$ (one expert wins
+everything) to $1$ (every domain has its own winner). These are deterministic
+summaries of the winner lists; they introduce no new model evaluation.
+
+\section{Results}
+\label{sec:results}
+
+\subsection{Over prefill, one generalist wins almost everything}
+
+In the 35B model, the prefill domain-winner list is dominated by a single expert
+that takes $18$ of the $20$ domains. Only two domains escape it: chemistry and
+linguistics each have their own prefill winner. The same expert is also the top
+expert overall on the prefill block. By the summaries of Section~\ref{sec:methods}, the prefill
+winner list has just $3$ distinct experts and a normalized entropy of $0.13$
+(Table~\ref{tab:conc}). Read literally, the prefill routing assigns one expert to
+nearly every subject: a single high-frequency default standing in for the rest.
+
+\subsection{Over generation, the winners disperse}
+
+The generation domain-winner list for the same model and the same prompts diverges
+sharply from its prefill list. All $20$ domains are won by $20$ distinct experts;
+no expert wins more than one domain. The normalized entropy of the winner list
+rises from $0.13$ to $1.00$. The generalist that won $18$ domains during prefill
+wins exactly one during generation (political science) and otherwise drops out of
+the per-domain lead. In its place, domain-specific experts surface. In philosophy,
+for instance, the generation winner held only rank~$5$ within philosophy during
+prefill ($W = 0.0188$ generation versus a mid-pack prefill weight), and it wins no
+other domain.
+
+The dispersion holds regardless of where we cut the generated text. These models
+do not emit a clean end-of-turn token; they spell out the end-of-turn marker as
+literal text and then continue into hallucinated follow-up turns until the token
+cap. Trimming the generation block at that marker, or leaving it untrimmed,
+produces the same $20$ distinct domain winners. The structure sits in the answer
+content.
+
+\subsection{Quantifying the shift}
+
+Table~\ref{tab:conc} collects the concentration summaries for both passes and both
+models, and Figure~\ref{fig:winners} shows the two leading numbers visually. The
+pattern is the same in both models and large in both: a concentrated, low-entropy
+winner list over prefill becomes a dispersed, high-entropy one over generation.
+The generalist's reach (max wins) falls from $18$ to $1$ in the 35B model and from
+$13$ to $2$ in the 122B model.
+
+\begin{table}[t]
+\centering
+\small
+\begin{tabular}{llrrrr}
+\toprule
+Model & Pass & Distinct winners & Max wins & Herfindahl & Norm.\ entropy \\
+\midrule
+Qwen 35B  & prefill    & 3  & 18 & 0.815 & 0.13 \\
+Qwen 35B  & generation & 20 & 1  & 0.050 & 1.00 \\
+Qwen 122B & prefill    & 7  & 13 & 0.445 & 0.42 \\
+Qwen 122B & generation & 18 & 2  & 0.060 & 0.95 \\
+\bottomrule
+\end{tabular}
+\caption{Concentration of the 20-domain winner list, by model and pass. Distinct
+winners and max wins are counts out of $20$ domains. Herfindahl is
+$\sum_i p_i^2$ and normalized entropy is $H$ from Section~\ref{sec:methods}, both on the
+distribution of domains won per expert. Each row summarizes one
+domain-winner table from the source archive ($n=60$ prompts per model, $3$ per
+domain).}
+\label{tab:conc}
+\end{table}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\textwidth]{figures/fig1_distinct_winners.pdf}
+\caption{Left: number of distinct experts among the $20$ domain winners. Right:
+number of domains won by the single most frequent winner. In both models the
+prefill winners collapse onto a generalist and the generation winners spread
+across the domains. $n=60$ prompts per model ($20$ domains $\times\,3$).}
+\label{fig:winners}
+\end{figure}
+
+Figure~\ref{fig:entropy} restates the same shift on a single scale-free axis: the
+normalized entropy of the winner distribution moves from $0.13$ to $1.00$ in the
+35B model and from $0.42$ to $0.95$ in the 122B model. The prefill values differ
+between the two models (the smaller model's prefill routing is more concentrated
+than the larger model's), but both land near the dispersed ceiling over generation.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.6\textwidth]{figures/fig2_concentration.pdf}
+\caption{Normalized entropy of the $20$-domain winner distribution ($0 =$ one
+expert wins all domains, $1 =$ every domain has its own winner), by model and
+pass. Both models move from a concentrated prefill winner list to a dispersed
+generation one.}
+\label{fig:entropy}
+\end{figure}
+
+\subsection{Token count does not explain the shift}
+
+A first objection is that prefill and generation differ in length: a prompt is
+tens of tokens, an answer is hundreds, and longer token sets could disperse the
+top experts for purely statistical reasons. We address this with a token-balanced
+design. Three prompts are each packed with twenty domain questions and padded to
+exactly $446$ prompt tokens, and each is allowed $2{,}048$ generated tokens, so
+the prefill and generation blocks are matched in scale and the per-chunk
+comparisons use identical token budgets.
+
+Within this design the prefill and generation \emph{expert sets} barely overlap.
+Figure~\ref{fig:balanced} reports the Jaccard overlap between the top experts of
+the two passes for each packed chunk: by routed weight it is $0.00$, $0.23$, and
+$0.07$ across the three chunks, and by selection rate $0.07$, $0.23$, and $0.00$.
+With token counts held fixed, the set of experts that dominates generation is
+mostly disjoint from the set that dominates prefill. The routing entropy itself is
+almost unchanged between the two passes ($0.958$ prefill, $0.953$ generation):
+generation spreads each token over a similar number of experts and routes them to
+\emph{different} ones. The regime moves the winners; length holds steady.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.62\textwidth]{figures/fig3_token_balanced.pdf}
+\caption{Token-balanced control (35B model, three packed prompts of $446$ tokens
+each). Jaccard overlap between the prefill and generation top-expert sets, by
+routed weight and by selection rate. With token counts matched, prefill and
+generation select largely disjoint experts.}
+\label{fig:balanced}
+\end{figure}
+
+\subsection{The pattern reproduces in a second model with different experts}
+
+The 122B model gives an independent replication. Its expert indices are unrelated
+to the 35B model's, and indeed a different generalist emerges: over prefill, one
+expert wins $13$ of $20$ domains (with a second taking $2$ more), for $7$ distinct
+winners and entropy $0.42$, less extreme than the 35B model and still strongly
+concentrated. Over generation the winners disperse to $18$ distinct experts across
+the $20$ domains, entropy $0.95$ (Table~\ref{tab:conc}, Figure~\ref{fig:winners}).
+The global top experts also change identity between passes: the prefill leaders
+are one set of indices and the generation leaders are a different set. The specific
+experts change from model to model; the prefill-concentrated, generation-dispersed
+shape carries over.
+
+The two models also illustrate that an expert's role can move between passes
+within a single model. In the 122B model the expert that leads philosophy
+\emph{generation} is mid-pack during philosophy prefill, while the expert that
+happened to look philosophy-relevant in the smaller model's generation has, in the
+larger model, its only strong footprint in a different domain (computer science).
+We read these as cautions against naming experts from any single pass or carrying
+an index across models.
+
+\section{Interpretation}
+\label{sec:interp}
+
+The measurement supports a narrow, mechanical claim. In these models the routing
+over prompt positions is dominated by a few high-frequency experts and carries
+little domain signal, while the routing over generated positions resolves into
+distinct per-domain leaders. Domain specialization, to the extent the router
+expresses it at all, is largely a property of the generation pass.
+
+A plausible reading of the prefill behavior gives the field's negative results a
+principled cause. Reading a short prompt is a fairly generic operation (tokenizing,
+parsing, building context) for which the router falls back on common, broadly useful
+experts; domain-specific computation is recruited once the model commits to producing
+domain-specific content token by token. On that reading, supplied-text routing is
+bound to miss domain structure, because it observes the model only during the pass
+that has yet to recruit the domain machinery. This is a hypothesis about the cause.
+The data locate the effect; its cause stays open.
+
+A deflationary reading would credit the dispersion to the generation pass in
+general: perhaps generation simply routes more diffusely, and the spread of winners
+follows from that. Two entropies, measured together in the token-balanced control,
+tell against it. The per-token routing entropy holds nearly steady across passes
+($0.958$ prefill, $0.953$ generation): the model spreads each token's weight over a
+similar number of experts in both regimes. The winner-distribution entropy moves
+far, from $0.13$ to $1.00$ in the 35B model and from $0.42$ to $0.95$ in the 122B
+model. The per-token spread stays put while the identity of each domain's leading
+expert changes. The generation pass relabels the domain leaders, and that
+relabeling is the specialization signal.
+
+The implication corrects the reading the field has drawn. An analysis that
+characterizes expert--topic structure from prefill routing, or from routing pooled
+over a sequence without separating the passes, sees the concentrated prefill picture
+and understates specialization. The same probe,
+read over the generation pass, recovers per-domain structure. So a negative result
+obtained over supplied text reports the prefill half accurately and leaves the
+generation half unmeasured; when the goal is to ask what an MoE's experts
+specialize in, the generation pass is the place to measure, and the two passes
+should be reported separately.
+
+\section{Limitations and falsification tests}
+\label{sec:limits}
+
+\paragraph{What the present evidence does not yet settle.}
+\begin{itemize}
+\item \textbf{Cross-family scope is the boundary of the sharp claim.} Both
+checkpoints are 8-bit quantized HauhauCS fine-tunes of Qwen3.5 MoE models. The
+pattern reproduces across two sizes with non-corresponding indices, which carries
+the model-independent, method-level reading: supplied-text routing understates
+specialization. Turning that reading into a statement about any one prior result
+requires re-measuring that result's setup. Concretely, re-running the Mixtral
+routing analysis of \citet{jiang2024mixtral} over the generation pass would upgrade
+the corrective from inference to demonstration; we predict it would resolve the
+topic structure their supplied-text analysis did not show. Until such a test, the
+demonstrated claim covers this lineage and the correction applies to the
+measurement convention.
+\item \textbf{Generation length and the token cap.} Generated blocks are long and
+frequently reach the cap (in the 122B run, $49$ of $60$ cells hit $2{,}048$ tokens;
+mean generated length $\approx 1{,}868$), and every cell eventually spills into
+chat-template continuation. Trimming at the spill boundary leaves the 35B winner
+list unchanged, which argues against a pure spill artifact, but a length- and
+cap-matched generation budget per prompt would make the comparison cleaner.
+\item \textbf{``Domain winner'' is a coarse statistic.} It reduces a domain to its
+single top expert by mean weight. A domain with two near-tied leading experts and
+a domain with one dominant expert are treated the same. Reporting the full
+top-$k$ per domain, and the stability of the winner across the three prompts,
+would give a fuller picture than the winner alone.
+\item \textbf{Significance is asserted descriptively.} The concentration
+summaries describe the observed winner lists; we have not attached a
+randomization test that asks how often a winner list this dispersed would arise
+under a null of pass-independent routing. The $18$-versus-$20$ and $13$-versus-$18$
+contrasts are large, but a permutation test would quantify them.
+\item \textbf{Three prompts per domain.} Twenty domains at three prompts each is
+enough to expose the prefill/generation contrast but thin for per-domain claims.
+The per-domain winner is the least reliable level of this analysis.
+\end{itemize}
+
+\paragraph{Tests that would confirm or break the claim.}
+\begin{itemize}
+\item Re-run the Mixtral analysis of \citet{jiang2024mixtral} --- the same data and
+the same routing readout --- over generated tokens as well as supplied text. The
+corrective predicts that the topic structure absent over supplied text resolves over
+generation; this is the direct test of the correction and the experiment that would
+carry it from a method-level inference to a model-specific demonstration.
+\item Run the same probe on a base (non-fine-tuned) Qwen3.5 MoE and on an MoE from
+a different family (for example a different vendor's top-$k$ router); the claim
+predicts the same prefill-concentrated, generation-dispersed shift with,
+again, non-transferable indices.
+\item Fix a common generation budget per prompt and re-measure, removing the
+cap and the variable-length confound entirely.
+\item Replace the single-winner statistic with a permutation test that shuffles the
+prefill/generation labels on token blocks and asks how often the dispersion gap
+seen here arises by chance; a corrective aimed at the field's negative results
+invites this stricter standard of evidence.
+\item Increase prompts per domain (say $10$--$20$) and report winner stability, so
+per-domain assignments carry a confidence; the higher-stakes framing makes that
+per-domain reliability worth the additional captures.
+\item Track, position by position within the generation block, when a domain's
+generation winner overtakes the prefill generalist; this would test the
+``specialization is recruited as content is produced'' reading directly.
+\end{itemize}
+
+\section{Conclusion}
+\label{sec:conc}
+
+Two MoE language models route prompt tokens and generated tokens to different
+experts, and the difference is structured. Over the prompt-reading pass a single
+generic expert wins almost every domain; over the generation pass the domains
+acquire distinct leading experts. The shift is large, survives matching prompts to
+a common length, and reproduces across two model sizes whose expert indices do not
+correspond. The lesson is a correction. The widely cited negative result on MoE
+expert specialization was measured over supplied text, the prefill half of the
+forward pass, the obvious and cheap place to look, and the half where the structure
+stays hidden. Prefill is the half the field measured; generation is the half it
+missed, and the half where specialization resolves. For anyone asking what an MoE's
+experts specialize in, separate the two passes and read specialization from
+generation.
+
+\section*{Reproducibility and audit note}
+
+The numbers in this paper are transcribed from per-domain winner tables in an
+existing capture archive and are listed claim-by-claim, with source files, in the
+accompanying \texttt{SOURCES.md}. The three figures and the concentration
+summaries in Table~\ref{tab:conc} are produced by \texttt{make\_figures.py} from
+the winner lists alone; that script re-runs no model and performs only the
+deterministic counting described in Section~3. The underlying captures were
+produced with greedy decoding and a top-$8$-of-$256$ routing reconstruction whose
+$W = S\cdot Q$ identity holds per token set at machine precision (residual $\le
+5.6\times10^{-17}$); we use the reconstructed, log-derived routing tables rather
+than any earlier hand-summarized figures. Two points of provenance are worth
+stating plainly: the second model's analysis was framed in its source notes around
+locating an analog of one particular expert, and we have deliberately set that
+framing aside and report only the pass-dependent concentration that the same
+tables support; and the per-domain winner is, as Section~\ref{sec:limits} notes, the least
+reliable layer of the analysis, so the claims we rest on are the
+aggregate concentration contrasts, not any single domain's assignment.
+
+\section*{Data and Code Availability}
+\addcontentsline{toc}{section}{Data and Code Availability}
+
+The data supporting this paper accompany it in the \texttt{data/} directory,
+organized as three runs: the 35B 60-prompt primary probe, the 35B token-balanced
+3-chunk control, and the 122B replication (prefill and generation captures). Each
+run folder contains the per-domain winner tables from which every number in the
+paper is taken; a manifest (\texttt{data/README.md}) maps each run to the claims it
+supports. The three figures and the concentration summaries in
+Table~\ref{tab:conc} are reproduced from those winner lists by
+\texttt{make\_figures.py}, which re-runs no model. A claim-by-claim source index
+is given in \texttt{SOURCES.md}. The raw router tensors (\texttt{.npz}) are included
+as non-load-bearing provenance. No new model training was performed.
+
+\section*{AI Collaboration Statement}
+\addcontentsline{toc}{section}{AI Collaboration Statement}
+
+Generative AI (Anthropic's Claude) was used as a tool in preparing this manuscript:
+to assist with drafting and revising prose, organizing the manuscript, and locating
+and formatting the bibliography. All experiments, captures, and numerical results
+are the author's; every reported value was traced to a source capture (see
+\texttt{SOURCES.md}), and every reference was verified by the author against its
+authoritative record to exist and to support the statement it is attached to. No AI
+system is an author. The author reviewed the entire text and takes full
+responsibility for its content, including any errors.
+
+\section*{Funding and Competing Interests}
+\addcontentsline{toc}{section}{Funding and Competing Interests}
+
+This work received no external funding. The author declares no competing interests.
+The models studied are third-party fine-tunes used as-is for measurement; the author
+has no affiliation with their creators.
+
+\bibliographystyle{plainnat}
+\bibliography{refs}
+
+\end{document}

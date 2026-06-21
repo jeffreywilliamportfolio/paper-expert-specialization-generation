@@ -1,0 +1,7 @@
+prompt_id=D20_environmental_science_03
+prompt=<|im_start|>user Compare ecology with environmental chemistry in how each approaches environmental risk assessment.<|im_end|> <|im_start|>assistant </think>  
+n_tokens_prompt=37
+n_tokens_generated=0
+n_layer_tensors=0
+n_router_tensors=48
+elapsed_ms=91

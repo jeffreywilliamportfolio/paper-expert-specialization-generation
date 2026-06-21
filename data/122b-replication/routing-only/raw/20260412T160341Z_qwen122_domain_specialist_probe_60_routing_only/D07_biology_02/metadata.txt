@@ -1,0 +1,7 @@
+prompt_id=D07_biology_02
+prompt=<|im_start|>user Why did Charles Darwin matter so much to biological science?<|im_end|> <|im_start|>assistant </think>  
+n_tokens_prompt=35
+n_tokens_generated=0
+n_layer_tensors=0
+n_router_tensors=48
+elapsed_ms=89

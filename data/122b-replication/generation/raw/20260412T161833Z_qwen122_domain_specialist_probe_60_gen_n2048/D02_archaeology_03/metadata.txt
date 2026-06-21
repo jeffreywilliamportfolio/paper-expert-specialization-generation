@@ -1,0 +1,7 @@
+prompt_id=D02_archaeology_03
+prompt=<|im_start|>user Compare radiocarbon dating with stratigraphy as tools for archaeological interpretation.<|im_end|> <|im_start|>assistant </think>  
+n_tokens_prompt=38
+n_tokens_generated=2048
+n_layer_tensors=0
+n_router_tensors=48
+elapsed_ms=26355

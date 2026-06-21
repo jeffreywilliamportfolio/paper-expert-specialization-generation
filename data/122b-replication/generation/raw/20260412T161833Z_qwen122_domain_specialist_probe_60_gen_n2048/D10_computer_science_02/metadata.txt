@@ -1,0 +1,7 @@
+prompt_id=D10_computer_science_02
+prompt=<|im_start|>user Why did Alan Turing matter to computer science, computation, and artificial intelligence?<|im_end|> <|im_start|>assistant </think>  
+n_tokens_prompt=39
+n_tokens_generated=2048
+n_layer_tensors=0
+n_router_tensors=48
+elapsed_ms=26413

@@ -1,0 +1,7 @@
+prompt_id=D01_history_01
+prompt=<|im_start|>user How do historians reconstruct the causes and course of World War II from archives, logistics records, intelligence reports, and command documents?<|im_end|> <|im_start|>assistant </think>  
+n_tokens_prompt=49
+n_tokens_generated=1101
+n_layer_tensors=0
+n_router_tensors=48
+elapsed_ms=14507

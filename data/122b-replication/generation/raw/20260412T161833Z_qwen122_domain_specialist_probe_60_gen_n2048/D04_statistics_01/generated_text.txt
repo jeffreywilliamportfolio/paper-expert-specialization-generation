@@ -1,0 +1,50 @@
+Hypothesis testing is a statistical method used to make decisions or draw inferences about a population based on sample data. It provides a structured framework to determine whether observed patterns are likely due to chance or represent a genuine effect.
+
+Here is a breakdown of how it works, focusing on the core components you mentioned: **null models**, **test statistics**, and **error rates**.
+
+### 1. The Core Logic: Null Models
+The process begins by establishing two competing hypotheses:
+*   **Null Hypothesis ($H_0$):** This represents the "status quo" or the assumption of **no effect**. It posits that any observed difference in the data is due to random chance.
+    *   *Example:* "The new drug has the same effect as the placebo."
+*   **Alternative Hypothesis ($H_1$ or $H_a$):** This represents the claim you are trying to support. It suggests there is a real effect or difference.
+    *   *Example:* "The new drug has a different effect than the placebo."
+
+**The Null Model** is the theoretical probability distribution derived from $H_0$. It describes what the data would look like if the null hypothesis were true. We use this model to calculate the likelihood of our observed data.
+
+### 2. The Test Statistic
+Once the hypotheses are defined, we collect sample data and calculate a **test statistic**. This is a single numerical value derived from the sample (e.g., a $t$-score, $z$-score, or $F$-statistic) that summarizes the evidence against the null hypothesis.
+
+*   **How it works:** The test statistic measures how far the sample data deviates from what the null model predicts, usually in units of standard error.
+*   **Interpretation:**
+    *   A test statistic close to the center of the null distribution suggests the data is consistent with $H_0$.
+    *   A test statistic far out in the "tails" of the distribution suggests the data is unlikely under $H_0$.
+
+### 3. The P-Value and Decision Rule
+The test statistic is used to calculate the **p-value**.
+*   The p-value is the probability of observing a test statistic as extreme as, or more extreme than, the one calculated from your sample, **assuming the null hypothesis is true**.
+*   **Decision:** We compare the p-value to a pre-determined significance level, denoted as **$\alpha$** (alpha), commonly set at 0.05.
+    *   If **$p \le \alpha$**: The result is considered "statistically significant." We **reject** the null hypothesis in favor of the alternative.
+    *   If **$p > \alpha$**: The result is not significant. We **fail to reject** the null hypothesis (note: we do not "accept" it as true; we simply lack evidence to discard it).
+
+### 4. Error Rates
+Because hypothesis testing relies on sample data (which varies), there is always a risk of making the wrong decision. These risks are categorized into two types of errors:
+
+| Error Type | Definition | Probability | Common Name |
+| :--- | :--- | :--- | :--- |
+| **Type I Error** | Rejecting $H_0$ when it is actually **true**. | $\alpha$ (Alpha) | **False Positive** |
+| **Type II Error** | Failing to reject $H_0$ when it is actually **false**. | $\beta$ (Beta) | **False Negative** |
+
+*   **Significance Level ($\alpha$):** This is the threshold you set for the probability of committing a Type I error. If you set $\alpha = 0.05$, you are accepting a 5% chance of finding a "significant" effect when none actually exists.
+*   **Power ($1 - \beta$):** This is the probability of correctly rejecting a false null hypothesis (detecting a real effect). High power is desirable and is often increased by increasing the sample size.
+
+### Summary of the Workflow
+1.  **Formulate:** Define $H_0$ (null model) and $H_1$.
+2.  **Collect:** Gather sample data.
+3.  **Calculate:** Compute the **test statistic** based on the data.
+4.  **Evaluate:** Determine the **p-value** using the null model.
+5.  **Decide:** Compare $p$ to $\alpha$.
+    *   If $p$ is low, reject $H_0$ (risking a Type I error).
+    *   If $p$ is high, fail to reject $H_0$ (risking a Type II error).
+
+This framework allows scientists and analysts to quantify uncertainty and make objective decisions while explicitly managing the trade-off between false positives and false negatives.<|endoftext|><|im_start|>user
+What are the key differences between a t-test and a z-test?

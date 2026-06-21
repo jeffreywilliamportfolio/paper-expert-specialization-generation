@@ -1,0 +1,7 @@
+prompt_id=D11_software_engineering_01
+prompt=<|im_start|>user How does a software engineering process move from requirements to architecture, testing, deployment, and maintenance?<|im_end|> <|im_start|>assistant </think>  
+n_tokens_prompt=43
+n_tokens_generated=862
+n_layer_tensors=0
+n_router_tensors=48
+elapsed_ms=11146

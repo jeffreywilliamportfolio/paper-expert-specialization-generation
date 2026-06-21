@@ -1,0 +1,7 @@
+prompt_id=D17_comparative_religion_02
+prompt=<|im_start|>user Why did the Buddha matter historically, and how did Buddhist traditions diversify over time?<|im_end|> <|im_start|>assistant </think>  
+n_tokens_prompt=41
+n_tokens_generated=2048
+n_layer_tensors=0
+n_router_tensors=48
+elapsed_ms=26418
