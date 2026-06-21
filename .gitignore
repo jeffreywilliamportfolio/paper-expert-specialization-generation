@@ -12,3 +12,7 @@ build*.log
 
 # OS
 .DS_Store
+
+# Claude Code local context (not part of the published artifact)
+CLAUDE.md
+.claude/
