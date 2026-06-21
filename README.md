@@ -2,8 +2,11 @@
 
 Why Prompt-Routing Studies Understate Domain Specialization in Mixture-of-Experts Models — paper source, figures, data, and reproducibility materials.
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20779604.svg)](https://doi.org/10.5281/zenodo.20779604)
+
 **Author:** Jeffrey W. Shorthill (independent researcher) · `jws299792@icloud.com`
 **Version:** 1.0 (June 2026) · preprint, not peer reviewed
+**DOI:** [10.5281/zenodo.20779604](https://doi.org/10.5281/zenodo.20779604) (concept DOI — resolves to the latest version)
 **License:** [CC BY 4.0](LICENSE)
 
 ## What this is

@@ -24,6 +24,13 @@ authors:
 version: "1.0"
 date-released: "2026-06-20"
 license: CC-BY-4.0
+identifiers:
+  - type: doi
+    value: "10.5281/zenodo.20779604"
+    description: "Concept DOI (all versions)"
+  - type: doi
+    value: "10.5281/zenodo.20779605"
+    description: "Version 1.0"
 url: "https://github.com/jeffreywilliamportfolio/paper-expert-specialization-generation"
 repository-code: "https://github.com/jeffreywilliamportfolio/paper-expert-specialization-generation"
 keywords:
@@ -45,4 +52,5 @@ preferred-citation:
       orcid: "https://orcid.org/0009-0004-3954-2752"
   year: 2026
   month: 6
+  doi: "10.5281/zenodo.20779605"
   notes: "Preprint, version 1.0. Not peer reviewed."
