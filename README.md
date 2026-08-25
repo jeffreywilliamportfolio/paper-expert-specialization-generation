@@ -1,11 +1,11 @@
-# The Generation Half
+# Generation-Time Routing Reveals Expert Specialization That Prefill Measurements Miss
 
-Why Prompt-Routing Studies Understate Domain Specialization in Mixture-of-Experts Models — paper source, figures, data, and reproducibility materials.
+Paper source, figures, data, and reproducibility materials. (Version 1.0 was titled "The Generation Half: Why Prompt-Routing Studies Understate Domain Specialization in Mixture-of-Experts Models"; version 1.1 restructures the paper around its single claim, drops the entropy bar chart that duplicated Table 1, and changes no value.)
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20779604.svg)](https://doi.org/10.5281/zenodo.20779604)
 
 **Author:** Jeffrey W. Shorthill (independent researcher) · `jws299792@icloud.com`
-**Version:** 1.0 (June 2026) · preprint, not peer reviewed
+**Version:** 1.1 (August 2026; v1.0 June 2026) · preprint, not peer reviewed
 **DOI:** [10.5281/zenodo.20779604](https://doi.org/10.5281/zenodo.20779604) (concept DOI — resolves to the latest version)
 **License:** [CC BY 4.0](LICENSE)
 
@@ -27,7 +27,7 @@ generation pass; prefill/supplied-text routing understates it.
 |---|---|
 | `main.tex` | Paper source (LaTeX). |
 | `refs.bib` | Bibliography (every entry verified against an authoritative record). |
-| `figures/` | The three figures, as `.pdf`. |
+| `figures/` | The figures as `.pdf` (v1.1 uses fig1 and fig3; fig2 retained from v1.0). |
 | `make_figures.py` | Regenerates the figures and concentration summaries from the winner lists. Runs no model. |
 | `SOURCES.md` | Claim-by-claim source-to-value index. |
 | `data/` | Supporting data for all reported numbers (see `data/README.md`). |

@@ -16,3 +16,6 @@ build*.log
 # Claude Code local context (not part of the published artifact)
 CLAUDE.md
 .claude/
+
+# editor backups
+*.bak

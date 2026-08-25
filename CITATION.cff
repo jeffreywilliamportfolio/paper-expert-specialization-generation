@@ -1,19 +1,26 @@
 cff-version: 1.2.0
 message: "If you use this work, please cite it as below."
-title: "The Generation Half: Why Prompt-Routing Studies Understate Domain Specialization in Mixture-of-Experts Models"
+title: "Generation-Time Routing Reveals Expert Specialization That Prefill Measurements Miss"
 abstract: >-
-  A widely cited reading of mixture-of-experts (MoE) language models holds that
-  their experts do not specialize by subject matter: routing measured over
-  supplied text spreads each expert across many topics. This reading rests on
-  half of the forward pass. A transformer routes tokens in two regimes -- a
-  parallel prefill pass that reads the prompt and a step-by-step generation pass
-  that writes the answer -- and supplied-text routing is the prefill half. Over
-  prefill a single high-frequency expert wins almost every domain and routing
-  looks domain-blind; over generation the winners disperse and most domains
-  acquire their own leading expert. The shift survives a length-matched control
-  and reproduces in a second, larger model with unrelated expert indices. Domain
-  specialization in these models is largely a property of the generation pass,
-  and routing read off prefill or pooled across passes understates it.
+  In two Qwen3.5 mixture-of-experts (MoE) checkpoints (35B and 122B parameters)
+  run on 60 prompts spanning twenty academic domains, the expert that receives the
+  most routing weight in a domain depends on which regime of the forward pass is
+  measured. Over prefill, when the prompt is processed in parallel, one generalist
+  expert wins 18 of 20 domains in the smaller model and 13 of 20 in the larger,
+  and routing looks domain-blind. Over generation, when the answer is produced
+  token by token, the winners disperse to 20 and 18 distinct experts and the
+  generalist wins one or two. The dispersion is a property of the regime: with
+  prefill and generation matched in token count, the two regimes select nearly
+  disjoint top-expert sets (Jaccard 0.00 to 0.23) at unchanged per-token routing
+  entropy (0.958 versus 0.953), so generation spreads each token over a similar
+  number of experts and routes it to different ones, and the pattern reproduces
+  across model sizes with unrelated expert indices. The widely cited negative
+  result that MoE experts do not specialize by topic was measured over supplied
+  text, which is prefill routing. Expert-specialization measurements over supplied
+  text, or pooled across regimes, are therefore understated by construction;
+  prefill-based negative results are silent about the regime in which
+  specialization is expressed; and analyses that ask what experts specialize in
+  should separate the two regimes and read specialization from generation.
 type: dataset
 authors:
   - family-names: Shorthill
@@ -21,8 +28,8 @@ authors:
     affiliation: "Independent researcher"
     email: jws299792@icloud.com
     orcid: "https://orcid.org/0009-0004-3954-2752"
-version: "1.0"
-date-released: "2026-06-20"
+version: "1.1"
+date-released: "2026-08-24"
 license: CC-BY-4.0
 identifiers:
   - type: doi
@@ -44,13 +51,13 @@ keywords:
   - language models
 preferred-citation:
   type: article
-  title: "The Generation Half: Why Prompt-Routing Studies Understate Domain Specialization in Mixture-of-Experts Models"
+  title: "Generation-Time Routing Reveals Expert Specialization That Prefill Measurements Miss"
   authors:
     - family-names: Shorthill
       given-names: "Jeffrey W."
       affiliation: "Independent researcher"
       orcid: "https://orcid.org/0009-0004-3954-2752"
   year: 2026
-  month: 6
-  doi: "10.5281/zenodo.20779605"
-  notes: "Preprint, version 1.0. Not peer reviewed."
+  month: 8
+  doi: "10.5281/zenodo.20779604"
+  notes: "Preprint, version 1.1 (concept DOI, resolves to the latest version). Not peer reviewed."
