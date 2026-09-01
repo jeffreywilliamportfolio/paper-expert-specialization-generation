@@ -489,3 +489,21 @@ notes are new:
   live [citation]/{AUTHOR}/TODO in the body, no em/en-dashes in prose, all three figure files
   present, citations render inline. FINAL COMPILE: 11 pages, 0 undefined citations, 0 overfull
   boxes. Awaiting Jeffrey's read + deposit (version/DOI footnote, Zenodo new version).
+
+## 2026-09-01 12:50 — v1.2 PUBLISHED
+
+Jeffrey approved the deposit ("I think its good to be pushed to my zenodo"). Flow (same rails
+as v1.0/v1.1): footnote version line filled (concept DOI); Data Availability now points to
+curated-data-index/ (provenance, manifests, build script, audit_20260828/ scripts copied in,
+10 MB; full ~6 GB archive from the author); v1.2 promoted to main.tex/refs.bib/main.pdf
+(11 pp); .zenodo.json/CITATION.cff/README updated for the new title; SOURCES.md v1.2 note;
+secret-scan clean; commit 50c52a5 pushed; GitHub release v1.2 -> Zenodo webhook.
+
+**Published record: https://zenodo.org/records/22236906 — DOI 10.5281/zenodo.22236906,
+version 1.2, isNewVersionOf 10.5281/zenodo.22089026, concept 10.5281/zenodo.20779604.**
+Follow-up commit adds the v1.2 DOI to CITATION.cff.
+
+Open follow-ups (not blocking): separate Zenodo deposit of the full expert-specialization-data
+archive (~6 GB) with its own DOI, then a metadata edit here to link it; optional cites for
+arXiv 2604.14434 / 2605.12476; the 10-prompt-per-subject official-checkpoint capture named in
+Limitations.
