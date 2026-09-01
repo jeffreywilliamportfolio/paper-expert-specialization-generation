@@ -507,3 +507,11 @@ Open follow-ups (not blocking): separate Zenodo deposit of the full expert-speci
 archive (~6 GB) with its own DOI, then a metadata edit here to link it; optional cites for
 arXiv 2604.14434 / 2605.12476; the 10-prompt-per-subject official-checkpoint capture named in
 Limitations.
+
+- 13:00 PDF preview added to the Zenodo listing. Zenodo files are immutable post-publish, so
+  a new version was minted via the API (Jeffrey's token; browser extension was disconnected):
+  record 22236999 = release zip + main.pdf, files.default_preview = main.pdf, version "1.2",
+  description gains a files note. Concept DOI now resolves to 22236999; preview endpoint 200.
+  22236906 (zip-only, minutes older) remains as a superseded intermediate version. CITATION.cff
+  updated. Note: the token was pasted into the session transcript; Jeffrey may want to
+  regenerate it at zenodo.org/account/settings/applications after the data deposit.

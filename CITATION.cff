@@ -48,8 +48,11 @@ identifiers:
     value: "10.5281/zenodo.22089026"
     description: "Version 1.1"
   - type: doi
+    value: "10.5281/zenodo.22236999"
+    description: "Version 1.2 (paper PDF + release archive)"
+  - type: doi
     value: "10.5281/zenodo.22236906"
-    description: "Version 1.2"
+    description: "Version 1.2 initial deposit (release archive only, superseded)"
 url: "https://github.com/jeffreywilliamportfolio/paper-expert-specialization-generation"
 repository-code: "https://github.com/jeffreywilliamportfolio/paper-expert-specialization-generation"
 keywords:
@@ -72,5 +75,5 @@ preferred-citation:
       orcid: "https://orcid.org/0009-0004-3954-2752"
   year: 2026
   month: 9
-  doi: "10.5281/zenodo.22236906"
+  doi: "10.5281/zenodo.22236999"
   notes: "Preprint, version 1.2 (published record DOI; the concept DOI 10.5281/zenodo.20779604 resolves to the latest version). Not peer reviewed."
