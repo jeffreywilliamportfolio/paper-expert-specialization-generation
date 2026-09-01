@@ -1,26 +1,32 @@
 cff-version: 1.2.0
 message: "If you use this work, please cite it as below."
-title: "Generation-Time Routing Reveals Expert Specialization That Prefill Measurements Miss"
+title: "Specialization Is Not a Myth: Subject-Specific Expert Sets Recur During MoE Generation"
 abstract: >-
-  In two Qwen3.5 mixture-of-experts (MoE) checkpoints (35B and 122B parameters)
-  run on 60 prompts spanning twenty academic domains, the expert that receives the
-  most routing weight in a domain depends on which regime of the forward pass is
-  measured. Over prefill, when the prompt is processed in parallel, one generalist
-  expert wins 18 of 20 domains in the smaller model and 13 of 20 in the larger,
-  and routing looks domain-blind. Over generation, when the answer is produced
-  token by token, the winners disperse to 20 and 18 distinct experts and the
-  generalist wins one or two. The dispersion is a property of the regime: with
-  prefill and generation matched in token count, the two regimes select nearly
-  disjoint top-expert sets (Jaccard 0.00 to 0.23) at unchanged per-token routing
-  entropy (0.958 versus 0.953), so generation spreads each token over a similar
-  number of experts and routes it to different ones, and the pattern reproduces
-  across model sizes with unrelated expert indices. The widely cited negative
-  result that MoE experts do not specialize by topic was measured over supplied
-  text, which is prefill routing. Expert-specialization measurements over supplied
-  text, or pooled across regimes, are therefore understated by construction;
-  prefill-based negative results are silent about the regime in which
-  specialization is expressed; and analyses that ask what experts specialize in
-  should separate the two regimes and read specialization from generation.
+  In sparse Mixture-of-Experts models, a learned router selects a small subset of
+  experts for each token from a fixed pool, during both prompt prefill and
+  autoregressive generation. Prior work correctly finds that prompt-side routing
+  can converge on one shared set of experts across domains. We show that
+  generation gives a different answer. We analyze five checkpoints across the
+  Qwen3.5 and GLM-4.7-Flash families, prefill on all five and generation on the
+  two Qwen3.5-35B-A3B checkpoints. In the HauhauCS fine-tune of
+  Qwen3.5-35B-A3B-Instruct, we test whether the selected expert sets follow the
+  local subject of an answer by packing multiple subjects into one generation,
+  letting the model regroup them across prompts, controlling for position, and
+  comparing them with the same questions asked independently; the subject test is
+  repeated on the official instruction-tuned checkpoint. Position-resolved
+  prefill routing primarily follows the wording of the question, while pooling
+  across the prompt produces the shared usage pattern reported in prior work.
+  Across packed and independently asked versions of identical questions,
+  generation-based expert sets identify the subject at 95 to 96% in Qwen3.5-35B
+  when the answer's register is held constant (0.70 over all design pairs, 0.54
+  when the register changes), compared with 15 to 17% for prefill and 6% by
+  chance. Generation-time expert sets remain stable within a subject, change
+  sharply at subject boundaries, and recur for the same subject across positions,
+  prompt design, and the official and fine-tuned checkpoints. On the official
+  instruction-tuned checkpoint, generation-time sets pair prompts by subject in
+  11 of 12 cases where prefill pairs 4 of 12. For short mixed prompts, prefill
+  carries the wording of the question, while generation carries the subject of
+  the answer.
 type: dataset
 authors:
   - family-names: Shorthill
@@ -28,8 +34,8 @@ authors:
     affiliation: "Independent researcher"
     email: jws299792@icloud.com
     orcid: "https://orcid.org/0009-0004-3954-2752"
-version: "1.1"
-date-released: "2026-08-24"
+version: "1.2"
+date-released: "2026-09-01"
 license: CC-BY-4.0
 identifiers:
   - type: doi
@@ -46,6 +52,7 @@ repository-code: "https://github.com/jeffreywilliamportfolio/paper-expert-specia
 keywords:
   - mixture-of-experts
   - expert specialization
+  - expert sets
   - routing
   - prefill
   - generation
@@ -54,13 +61,13 @@ keywords:
   - language models
 preferred-citation:
   type: article
-  title: "Generation-Time Routing Reveals Expert Specialization That Prefill Measurements Miss"
+  title: "Specialization Is Not a Myth: Subject-Specific Expert Sets Recur During MoE Generation"
   authors:
     - family-names: Shorthill
       given-names: "Jeffrey W."
       affiliation: "Independent researcher"
       orcid: "https://orcid.org/0009-0004-3954-2752"
   year: 2026
-  month: 8
-  doi: "10.5281/zenodo.22089026"
-  notes: "Preprint, version 1.1 (concept DOI, resolves to the latest version). Not peer reviewed."
+  month: 9
+  doi: "10.5281/zenodo.20779604"
+  notes: "Preprint, version 1.2 (concept DOI, resolves to the latest version). Not peer reviewed."

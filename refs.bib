@@ -1,3 +1,15 @@
+% refs_v12.bib -- bibliography for main_v12_DRAFT.tex (assembled 2026-08-30).
+% Part 1: every entry from refs.bib (v1.1), unchanged.
+% Part 2: the seven references from DRAFT_v12_sections_20260830.md section G
+%         (arXiv ids as eprint fields, Zenodo DOIs as doi fields).
+% 2026-09-01: Part 2 entries harmonized to the v1.1 style (howpublished + doi);
+%             plainnat does not render eprint/archivePrefix fields.
+%             Herbst ICML 2026 note verified (icml.cc/virtual/2026/poster/61679).
+
+% ---------------------------------------------------------------------------
+% Part 1: v1.1 entries (verbatim from refs.bib)
+% ---------------------------------------------------------------------------
+
 @article{jacobs1991adaptive,
   author  = {Robert A. Jacobs and Michael I. Jordan and Steven J. Nowlan and Geoffrey E. Hinton},
   title   = {Adaptive Mixtures of Local Experts},
@@ -85,9 +97,72 @@
 }
 
 @misc{hayashi2026layerwise,
-  author       = {Shun-ichiro Hayashi and Daichi Mukunoki and Tetsuya Hoshino and Takahiro Katagiri},
+  author       = {{Shun-ichiro} Hayashi and Daichi Mukunoki and Tetsuya Hoshino and Takahiro Katagiri},
   title        = {Layer-wise {M}o{E} Routing Locality under Shared-Prefix Code Generation: Token-Identity Decomposition and Compile-Equivalent Fork Redundancy},
   year         = {2026},
   howpublished = {arXiv:2604.17182},
   doi          = {10.48550/arXiv.2604.17182}
+}
+
+% ---------------------------------------------------------------------------
+% Part 2: v1.2 additions (DRAFT_v12_sections_20260830.md, section G;
+%         author lists from ledger/related/*.md, read 2026-08-29)
+% ---------------------------------------------------------------------------
+
+@misc{wang2026standingcommittee,
+  author       = {Yan Wang and Yitao Xu and Nanhan Shen and Jinyan Su and Jimin Huang and Zining Zhu},
+  title        = {The Illusion of Specialization: Unveiling the Domain-Invariant ``Standing Committee'' in {M}ixture-of-{E}xperts Models},
+  year         = {2026},
+  howpublished = {arXiv:2601.03425},
+  doi          = {10.48550/arXiv.2601.03425}
+}
+
+@misc{herbst2026expertstrikesback,
+  author       = {Jeremy Herbst and Stefan Wermter and Jae Hee Lee},
+  title        = {The Expert Strikes Back: Interpreting {M}ixture-of-{E}xperts Language Models at Expert Level},
+  year         = {2026},
+  howpublished = {arXiv:2604.02178},
+  doi          = {10.48550/arXiv.2604.02178},
+  note         = {ICML 2026}
+}
+
+@misc{ye2026polysemantic,
+  author       = {Charles Ye and Bo Yuan and Lee Sharkey},
+  title        = {Polysemantic Experts, Monosemantic Paths: Routing as Control in {M}o{E}s},
+  year         = {2026},
+  howpublished = {arXiv:2604.17837},
+  doi          = {10.48550/arXiv.2604.17837},
+  note         = {ICLR 2026 Workshop on Representational Alignment (Re-Align)}
+}
+
+@misc{do2026domainexperts,
+  author       = {Giang Do and Hung Le and Truyen Tran},
+  title        = {Do Domain-specific Experts Exist in {M}o{E}-based {LLM}s?},
+  year         = {2026},
+  howpublished = {arXiv:2604.05267},
+  doi          = {10.48550/arXiv.2604.05267}
+}
+
+@misc{wang2026myth,
+  author       = {Xi Wang and Soufiane Hayou and Eric Nalisnick},
+  title        = {The Myth of Expert Specialization in {M}o{E}s: Why Routing Reflects Geometry, Not Necessarily Domain Expertise},
+  year         = {2026},
+  howpublished = {arXiv:2604.09780},
+  doi          = {10.48550/arXiv.2604.09780}
+}
+
+@misc{shorthill2026entropy,
+  author       = {Jeffrey Shorthill},
+  title        = {Read Routing Entropy at a Fixed Position: A Cross-Model Study of the Prefix Effect in {M}ixture-of-{E}xperts Routing},
+  year         = {2026},
+  howpublished = {Zenodo},
+  doi          = {10.5281/zenodo.22151499}
+}
+
+@misc{shorthill2026incontext,
+  author       = {Jeffrey Shorthill},
+  title        = {In-Context Availability Reorganizes Expert Routing},
+  year         = {2026},
+  howpublished = {Zenodo},
+  doi          = {10.5281/zenodo.22088887}
 }

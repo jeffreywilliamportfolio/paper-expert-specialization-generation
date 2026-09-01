@@ -1,0 +1,177 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Expert Specialization: What the Data Says (v2)</title>
+<style>
+@page{size:letter;margin:0.8in 0.8in 0.9in 0.8in;@bottom-center{content:"Expert specialization findings v2, 2026-08-29. Page " counter(page) " of " counter(pages);font:9pt Helvetica,Arial,sans-serif;color:#666}}
+body{font:10.5pt/1.45 Georgia,"Times New Roman",serif;color:#111}
+h1{font:bold 20pt/1.2 Helvetica,Arial,sans-serif;margin:0 0 4pt}
+.sub{font:10pt Helvetica,Arial,sans-serif;color:#555;margin:0 0 16pt}
+h2{font:bold 13.5pt/1.2 Helvetica,Arial,sans-serif;margin:20pt 0 6pt;border-bottom:1.5px solid #222;padding-bottom:3pt;page-break-after:avoid}
+h3{font:bold 11pt Helvetica,Arial,sans-serif;margin:13pt 0 3pt;page-break-after:avoid}
+p{margin:0 0 7pt}
+table{border-collapse:collapse;width:100%;table-layout:fixed;margin:6pt 0 12pt;font-size:9.2pt}
+tr{page-break-inside:avoid}
+th{background:#eee;text-align:left;font:bold 8.8pt Helvetica,Arial,sans-serif;padding:4pt 5pt;border-bottom:1px solid #999;vertical-align:bottom}
+td{padding:4pt 5pt;border-bottom:1px solid #ddd;vertical-align:top;word-break:break-word}
+td.r{text-align:right;white-space:nowrap}
+.tag{display:inline-block;font:bold 7.8pt Helvetica,Arial,sans-serif;padding:1.5pt 5pt;border-radius:3px;color:#fff;white-space:nowrap}
+.SUP{background:#2a7d3f}.MIX{background:#c8730a}.REF{background:#b3121b}.NT{background:#8a8a8a}
+.box{border-left:3px solid #2f6fb5;background:#f3f7fc;padding:6pt 9pt;margin:8pt 0 10pt}
+.flag{border-left:3px solid #b3121b;background:#fff4f4;padding:6pt 9pt;margin:8pt 0 10pt}
+.src{font:8.6pt Helvetica,Arial,sans-serif;color:#666;margin:-4pt 0 8pt}
+ul{margin:0 0 8pt 18pt;padding:0}li{margin:0 0 4pt}
+code{font:9pt "Courier New",monospace}
+.big{font-size:11.5pt}
+</style></head><body>
+
+<h1>Expert Specialization: What the Data Says</h1>
+<p class="sub" style="margin:0 0 4pt"><b>Version 2, 2026-08-29.</b> Adds the cross-design identification result and its four null controls (F2), the base-model replication (F11), a base-model domain probe scored today (F11), the set-size check on the token-balanced Jaccard (Section 4), and a changelog (Section 8). Everything from version 1 is kept.</p>
+<p class="sub">Plain-language findings from a five-agent audit of every local routing capture that bears on expert specialization by domain. Compiled 2026-08-28, extended 2026-08-29. Source notes with every number and file path: <code>ledger/agents/A_primary35b.md</code>, <code>B_controls35b.md</code>, <code>C_122b.md</code>, <code>D_glm.md</code>, <code>E_register.md</code>; cross-design and null-control numbers: <code>ledger/CREW_REPRODUCIBILITY_20260828.md</code>; today's reruns: <code>JOURNAL_v12.md</code>. Frozen predictions written before the audit: <code>ledger/FROZEN_PREDICTIONS_20260828T2115.md</code>.</p>
+
+<h2>1. The question</h2>
+<p>Do the experts in a mixture-of-experts model divide up work by subject? The Mixtral report said no. Our paper (v1.1, Zenodo 22089026) says the answer depends on when you look: while the model reads the prompt (prefill) one generalist expert leads almost every subject, and while it writes the answer (generation) each subject gets its own leading expert. This audit asked three things. Does that hold up when every number is recomputed from the archive? What else in the archive speaks to it? And what is the generation-time "domain winner" actually tracking, the subject or something else?</p>
+
+<div class="box"><b>Short answer.</b> The shape holds and reproduces to the last digit. The strongest new evidence for real specialization is that the same subject recruits the same small crew of experts across different prompts. But two things the paper does not say are also true: most individual per-domain winners are near-ties at three prompts per domain, and the register an answer is written in moves the generation experts at least as much as the subject does. The archive also contains four bugs that a reviewer would find, listed in Section 4. <b>Added in v2:</b> the same-subject-same-crew result now has a number (a subject's generation crew identifies that subject across independent prompt designs 95 to 96% of the time; chance 6%; prefill rows of the same questions 15 to 17%), it survives four null controls, and it replicates on the base checkpoint, including a 12-prompt base domain probe that had never been scored (11 of 12 nearest neighbours by subject).</div>
+
+<h2>2. What was examined</h2>
+<table>
+<tr><th style="width:26%">Set</th><th style="width:34%">What it is</th><th style="width:40%">What survives locally</th></tr>
+<tr><td>35B domain probe (Run 1)</td><td>Qwen3.5-35B-A3B HauhauCS Q8_0, 20 domains × 3 prompts, prefill + generation to 2,056 tokens; re-captured 2026-04-15</td><td>Per-domain-per-layer W/S/Q summaries (20×40×256). No raw per-token tensors. The re-capture is bit-identical to the first (max difference 3.5e-18).</td></tr>
+<tr><td>35B token-balanced control (Run 2)</td><td>3 packed prompts, 446 prompt tokens each, 2,048 generated</td><td>Per-token layer-averaged W/S/Q, generated tokens. No raw tensors.</td></tr>
+<tr><td>35B philosophy-expert bias (causal)</td><td>Experts 114/87/170/68 biased by −8 to +8 at every layer, 9 runs × 60 prompts</td><td>Domain-level summaries per run, all generated text.</td></tr>
+<tr><td>122B replication (Run 3)</td><td>Qwen3.5-122B-A10B HauhauCS Q8_K_P, same 60 prompts, prefill-only run plus generation run</td><td>Results JSON and text only. No raw tensors (deleted on the box).</td></tr>
+<tr><td>GLM-4.7-Flash domain battery</td><td>Different family: 64 experts, top-4, sigmoid gating with a correction bias. 20 domains × 15 prompts. Plus register runs with generation.</td><td>Full raw tensors (25,000 files). Domain runs are <b>prefill only</b>.</td></tr>
+<tr><td>Base safety smoke (35B, <b>base</b>) <i>new in v2</i></td><td>Official Qwen3.5-35B-A3B Q8_0, 2026-04-29: 5 domains (finance, medical, physical, professional, legal) × 2 registers (consequence-framed vs neutral), 12 prompts, 256 generated tokens</td><td>Full raw tensors, all 40 router layers. Scored 2026-08-29; it is the only base capture on the drive with subject variation and generation.</td></tr>
+<tr><td>Register / dialect captures (35B)</td><td>AAVE vs academic English pairs (50 pairs × 8 prompt types), medical triage arms, HVAC technical-vs-experience control, base and fine-tune</td><td>Full raw tensors (about 19,000 files). Recomputed from scratch.</td></tr>
+</table>
+
+<h2>3. Findings</h2>
+
+<h3>F1. The prefill-generalist, generation-dispersed shape holds and reproduces exactly</h3>
+<p>Every number in the paper recomputes from the archive. 35B: expert 224 wins 18 of 20 domains in prefill and only political science in generation (by a 5.6% margin); generation has 20 distinct winners. 122B: expert 233 wins 13 of 20 in prefill; generation has 18 distinct winners, and 14 of those 20 winners climbed from outside the prefill top six. The token-balanced control reproduces to six decimals (Jaccard 0.000/0.231/0.067; entropy 0.9575 vs 0.9527). The overlap of any two domains' top-8 expert sets averages 0.51 in prefill and 0.03 in generation on the 35B (119 of 190 domain pairs share no expert at all in generation).</p>
+<p class="src">A §3.1, 3.7; B F1; C F2, F3.</p>
+
+<h3>F2. The same subject recruits the same crew, across prompts. This is the specialization evidence.</h3>
+<p>Inside the packed prompts, where one answer walks through 20 subjects in a row, the top experts change at almost every subject boundary (overlap between subjects about 0.05, versus 0.45 to 0.55 between the two halves of the same subject). And the crews come back: archaeology brings in experts 191, 80 and 135 in chunk A, in chunk C, and in the separate 60-prompt probe; chemistry answers start with expert 130 in two different chunks; computer science answers put 206, 207 and 189 near the top in all three. The split is present in the first 64 generated tokens; it does not build up with position.</p>
+<p>This is the result the paper's winner tables gesture at but cannot show on their own: "dispersion" means each subject has its own small set, and that set is stable when the prompt style changes.</p>
+<h3 style="font-size:10.5pt;margin-top:8pt">F2a. Putting a number on it: cross-design identification (added in v2)</h3>
+<p>Take a subject's top-8 generation crew from one prompt design and ask which subject in a second, independent design has the most similar crew. Count it correct if it is the same subject. The designs are the three packed prompts (A explanations, B biographies, C synthesis; segmented at the model's own markdown headers) and the separate 60-prompt probe (P).</p>
+<table>
+<tr><th style="width:34%">Design pair</th><th style="width:14%">Correct</th><th style="width:12%">Rate</th><th style="width:40%">Matched-subject overlap (mismatched)</th></tr>
+<tr><td>A ↔ P (packed explanations vs separate probe)</td><td class="r">23 / 24</td><td class="r"><b>0.96</b></td><td>0.387</td></tr>
+<tr><td>C ↔ P (packed synthesis vs separate probe)</td><td class="r">36 / 38</td><td class="r"><b>0.95</b></td><td>0.379</td></tr>
+<tr><td>All pairs excluding B</td><td class="r">73 / 86</td><td class="r">0.85</td><td>0.332</td></tr>
+<tr><td>All ordered pairs of A, B, C, P</td><td class="r">117 / 168</td><td class="r">0.70</td><td>0.270 (0.032)</td></tr>
+<tr><td>Pairs involving B (biographies)</td><td class="r">44 / 82</td><td class="r">0.54</td><td>0.206</td></tr>
+<tr><td>Label-shuffle null, 200 draws</td><td class="r">—</td><td class="r">0.063</td><td>95th percentile 0.095, maximum 0.119</td></tr>
+</table>
+<p>Chance is one in 20 subjects, or 0.05; the shuffle null lands at 0.06. The shortfall sits in chunk B, where the prompts asked for biographies instead of explanations: the subject expert persists (mathematics 100, neuroscience 54 and 24, chemistry 130) but the rest of the crew follows the register. That is F2 and F4 in a single measurement.</p>
+<p><b>Four null controls</b>, all run on the same tensors:</p>
+<ul>
+<li><b>Chance overlap.</b> Two random top-8 sets out of 256 overlap at 0.016. Matched subjects overlap at 0.270 (17× chance); mismatched at 0.032 (2×).</li>
+<li><b>Position.</b> Compare A to C with C's subjects in a different order. Same position, different subject: 0.020. Same subject, different position: 0.194. Subject wins 9 of 10, one tie at zero.</li>
+<li><b>Drift.</b> Restrict the candidates to the previous, same and next subject in the target order (chance 0.33). Still 139 of 168 = 0.83; excluding B, 78 of 86 = 0.91. Neighbouring subjects overlap at 0.047. The crews are not sliding along the answer.</li>
+<li><b>Prefill rows of the same questions.</b> Run the identical test on the prompt tokens instead of the answer tokens. A ↔ P drops from 0.96 to <b>0.17</b>; C ↔ P from 0.95 to <b>0.15</b>; A ↔ C stays at 0.68 because those two packed prompts share their wording. Prefill crews follow the question's tokens; generation crews follow the subject of the answer. (Caveat: the HF tokenizer gives 392 tokens for the packed prompt against 446 in the capture, so the prefill question spans were rescaled proportionally; edge error about 1 to 2 tokens on 20-token questions. Generation numbers are exact.)</li>
+</ul>
+<p class="src">B F3, F4; CREW_REPRODUCIBILITY §1, nulls 4 to 7.</p>
+
+<h3>F3. Most individual domain winners are near-ties. The dispersion is solid; the names are not.</h3>
+<p>With three prompts per domain, only 7 of the 20 generation winners on the 35B lead by more than 10%, and by a worst-case bound 16 of 20 could change if one prompt were dropped. Only four are safe: philosophy (E114, 49% ahead), psychology (E146, 37%), mathematics (E100, 23%), linguistics (E103, 13%). Prefill winners are steadier (11 of 20 clear). The 122B prefill flips found earlier (linguistics, philosophy) had margins of 0.0003 and 0.0005 on W values around 0.009.</p>
+<p>So the paper's headline contrast (Herfindahl 0.815 vs 0.05) is far too large to be sample noise, but any sentence naming "the biology expert" or "the history expert" is on thin ice. Only the four above deserve a name.</p>
+<p class="src">A §3.2, 3.3; C F1.</p>
+
+<h3>F4. Generation winners track the register of the answer at least as much as its subject</h3>
+<p>This is the biggest thing the paper does not say. Three independent measurements agree:</p>
+<ul>
+<li><b>Same topic, different register.</b> One fixed HVAC paragraph, asked three ways (explain it / describe the system processing itself / what would it be like to be it). Prefill top-15 overlap between the technical and experience versions: 0.50. Generation overlap: <b>0.00</b>. That is the full size of a domain change in the domain probe (0.056 average between domains). Replicated on a second topic and on the base model.</li>
+<li><b>Different question type, same dialect.</b> In the 50-pair register run, changing the prompt type (fact check, legal, medical, "what is it like to be you") moves the generation top-12 set to overlap 0.13, about what changing the academic domain does (0.06).</li>
+<li><b>Same everything, different dialect.</b> AAVE vs academic English on matched content: generation top-12 overlap 0.64 to 0.71, far above the 0.28 floor for two unrelated prompts of the same type. Prefill overlap 0.83 to 0.89. Dialect is close to a no-op for the expert set.</li>
+</ul>
+<p>On GLM the same asymmetry shows from the other side: register gives no prefill separation at matched length but moves generation routing by +0.03 to +0.06 bits, about what a domain change does in prefill (+0.043).</p>
+<p>Reading: the generation-time "domain winner" is a mixture of subject and the voice the answer is written in. The 60-prompt probe holds register roughly constant (all third-person expository), so its winners are mostly subject; but a probe that varied register would find winners moving without the subject moving. The paper should say this.</p>
+<p class="src">E F3, F4, F5; D F4.</p>
+
+<h3>F5. The prefill generalist is a property of the prompt set, not the model</h3>
+<p>Expert 224 leads prefill on the 60-prompt probe, the 50-pair register run, and the HVAC paragraphs. It is rank 2 to 4 on the packed prompts (experts 87 and 47 lead), rank 2 behind expert 166 on the transformer-description paragraph, and outside the top 10 on every medical-triage arm (247 and 47 lead). The lead expert is always a flat high-frequency default, selected on about 7 to 8% of slots, never a subject expert. "Prefill concentrates on a default" is right; "the default is 224" is only right for some prompt sets.</p>
+<p class="src">B F2, F12; E F1.</p>
+
+<h3>F6. Where in depth the domain signal sits</h3>
+<p>35B: flat. Generation has about 14 distinct winners per layer at every one of the 40 layers (prefill 1.6), slightly stronger in the middle third, weakest at the first and last layers. The 3:1 DeltaNet/attention pattern leaves no imprint on dispersion. GLM: two peaks, layers 7 to 9 and 43 to 44, with a trough in the middle; the sharpest subject specialists (selectivity 10× to 13×) live at single layers with 1 to 2% share and never win a pooled list. 122B: the DeltaNet layers and the softmax layers use disjoint expert vocabularies in every run (top-8 overlap zero), so any 48-layer pooled table blends two separate routing systems.</p>
+<p>Method point that follows: on GLM, pooling across layers erases domain clustering entirely (every domain pair at cosine 0.99); at the (layer, expert) level related domains sit at 0.90 to 0.95 and unrelated at 0.81 to 0.88, and every domain's nearest neighbour is semantic. The weak clustering seen on the 35B (related pairs 0.083 vs unrelated 0.029) used layer-pooled sets and is probably an underestimate for the same reason.</p>
+<p class="src">A §3.4, 3.7; D F3, F5; C F5.</p>
+
+<h3>F7. The one causal test shows the philosophy experts are removable, not that they carry philosophy</h3>
+<p>Turning the four philosophy generation leaders off (bias −2 or lower zeroes their selection) leaves 15 of 20 domain winners unchanged, per-domain top-8 overlap 0.79 with baseline, and the philosophy answers on-topic, same length, same keywords ("belief" 23 → 23, "consciousness" 4 → 6). The freed weight spreads thinly (largest gainer +0.0003). Turning them on (+2) shortens and derails answers; +5 and +8 collapse output to digits. There is no dose-response interior: −2 is already off, +2 is already dominant. So these experts can be covered for by others; the data cannot say they hold the domain knowledge. This is consistent with F4's reading of them as register experts.</p>
+<p>Note: the folder's README describes the design wrongly (it says E114 at −8 and the others at −5; the command logs show all four at the same bias in a symmetric sweep).</p>
+<p class="src">B F7, F8, F9, §1b.</p>
+
+<h3>F8. Expert 114 on the 35B</h3>
+<p>Across every capture: rank 1 in generation whenever the output is reflective, first-person or about experience (philosophy 1, comparative religion 2, philosophy-of-mind and monotheism segments 1, HVAC experience register 1, transformer experience probe 1 to 2, "self about AI" prompts 4), and rank 200+ for technical explanation and fact answers (HVAC technical 221, routing description 211, fact-distortion 227). It is not a topic expert: it sits at rank 73 to 146 in every medical arm regardless of register, and it also reaches the top 10 in archaeology (four separate places), physics and thermodynamics, which no register story predicted. In prefill it is low (rank 124 pooled on the domain probe; median per-cell rank 155 on the register run) except when the prompt itself is written in the reflective register (rank 5 to 8).</p>
+<p>Two structural facts. Its weight sits in four layers, 8, 14, 20 and 26, so "E114" is really four separate expert matrices that share an index, with layer 26 and layer 14 nearly tied. And it is already rank 1 on the experience-probe prompts in the <b>base</b> Qwen3.5-35B-A3B, whose prefill expert sets are identical to the fine-tune's (W correlation 0.998). The fine-tune did not create it.</p>
+<p>On 122B, the same index is a code-and-law expert (computer science rank 4; philosophy 182, psychology 222). No single 122B expert plays the role; the nearest is a cluster (E40, E5, E159, E101, E223) whose members each also win at least one science.</p>
+<p class="src">A §3.5, 3.6; B F5, F6, F10, F12; E F6, F7; C F6.</p>
+
+<h3>F9. The fine-tunes did not touch the routers</h3>
+<p>GLM base vs HauhauCS: all 46 router matrices bit-identical (cosine 1.000000, difference zero). Qwen 35B base vs HauhauCS: overall prefill top-8 sets identical, W correlation 0.9977; the fine-tune shifts about 2 to 3% of routing slots through the residual stream. Any "the uncensored fine-tune rewired the experts" reading is out.</p>
+<p class="src">D F4; B F12.</p>
+
+<h3>F10. Cross-family: GLM shows the prefill half, and the generation half was never captured</h3>
+<p>On GLM prefill one default (E10) wins 12 of 20 domains with 15 prompts each; 5 distinct winners, Herfindahl 0.41. Same shape as Qwen, gentler, because sigmoid gating with the correction bias spreads load (the winner is selected on only 9% of slots and the top five defaults sit within 0.002 of each other, so 8 of 20 winners change identity between analysis choices). No GLM domain prompt was ever generated, so the second half of the claim has no cross-family test yet. The register runs have generation, and there winner identity changes between reading and writing in 15 to 17 of 20 prompts, but without domain labels that is a weak proxy.</p>
+<p class="src">D F1, F2.</p>
+
+<h3>F11. It is not the fine-tune: the base checkpoint shows the same thing (added in v2)</h3>
+<p>Every domain number in the paper came from the HauhauCS fine-tune. Three base-model checks, all on the official ggml-org Qwen3.5-35B-A3B Q8_0 with no HauhauCS anywhere:</p>
+<ul>
+<li><b>Table 1 shape, 50-pair run</b> (100 base prompts, 8 prompt types). Prefill winners: expert 224 in 6 of 8 types, 3 distinct, Herfindahl 0.59. Generation: 7 distinct winners, Herfindahl 0.16. The pooled prefill top-8 and generation top-8 share no expert (Jaccard 0.000). Between-type overlap 0.42 in prefill, 0.09 in generation.</li>
+<li><b>Same crews in base and fine-tune.</b> Nearest-neighbour identification over the 8 prompt types: base AAVE → base English 8 of 8 (matched 0.733, mismatched 0.092); base → HauhauCS 7 of 8 in both dialects; base AAVE → HauhauCS English 8 of 8. Legal is 122/109/85, medical 206/247, identity 103/139 in every cell regardless of dialect or checkpoint.</li>
+<li><b>Base domain probe, scored 2026-08-29.</b> The 12-prompt safety smoke (5 subjects × consequence-framed and neutral). Within-subject overlap vs between-subject: prefill 0.52 vs 0.47 (no separation; nearest neighbour by subject 4 of 12); generation 0.46 vs <b>0.035</b>, nearest neighbour by subject <b>11 of 12</b> (chance 1 in 11). The register contrast is crossed inside each subject and generation still pairs by subject. Both legal cells put expert 122 first, the same legal lead the 50-pair run found. Caveats: two prompts per subject, 256-token answers, finance has four cells (finance-only within 0.49, the other four pairs 0.41).</li>
+</ul>
+<p><b>Scoping result, also from base.</b> On a long coherent technical prompt followed by a technical answer (the 30-prompt l1l3 set), prefill and generation share the crew (166/151/41; Jaccard 0.60 to 0.78) and per-token entropy is flat (0.9557 vs 0.9583). A narrow-topic prompt (medical triage) already routes to its topic crew in prefill (247/47; overlap with generation 0.23 to 0.37). So the "regime effect" is a content-and-register effect that short, mixed prompts expose: the prompt is a few tokens of one voice, the answer is hundreds of tokens of the subject. The abstract now says "for short mixed prompts."</p>
+<p class="src">CREW_REPRODUCIBILITY §3, §4; JOURNAL_v12 2026-08-29 10:55; script <code>expert-specialization-data/audit_20260828/base_safety_smoke_crews.py</code>.</p>
+
+<h2>4. Bugs found in the archive</h2>
+<div class="flag"><b>122B: the 13-vs-15 prefill discrepancy is a last-layer capture artifact.</b> llama.cpp evaluates the last layer for one token only during prefill. The routing-only script drops that layer (the 60 "missing layer" events); the generation script's split test lets it through with mostly generation rows counted as prefill, because the special-case check is hard-coded to layer 39, the 35B's last layer, and 122B has 48. The fingerprint is a uniform −0.0001 to −0.0002 drop across about 40 experts. The routing-only 13/20 is the clean reading. Keep it in the paper and disclose the separate capture.</div>
+<div class="flag"><b>122B: the "trimmed" generation track never trimmed.</b> It scans for the 6-token BPE spelling of <code>&lt;|im_end|&gt;</code>, which never matches; real spill is the single <code>&lt;|endoftext|&gt;</code> token, present in all 60 cells. Mean clean answer 1,027 of 1,868 tokens, so about 45% of the 122B generation block is post-answer babble. The 18-distinct result was computed on that. It needs a proper re-trim, which needs tensors we no longer have. The 35B is unaffected: its trimmed and untrimmed tracks give the same winners and its trimmer fired where it should.</div>
+<div class="flag"><b>122B: E48 is a spill expert.</b> The journal's "inner-state carrier" on 122B is rank 1 untrimmed and rank 53 (pooled) or 130 (softmax layers) inside the clean answer, rank 1 in the post-spill loop turns. Anything built on E48 should be re-read.</div>
+<div class="flag"><b>HVAC "180 prompts" are 18 prompts × 10 byte-identical repeats.</b> The results file's n = 60 per register is really n = 6. The register effect there is large enough to survive (E114 generation W 0.0029 ± 0.0007 technical vs 0.0135 ± 0.0020 experience, no overlap), but every HVAC number should be quoted at n = 6.</div>
+<div class="flag"><b>Smaller.</b> The token-balanced Jaccard uses top-8 sets; the paper never states the size (0.231 = 3/13). Recomputed 2026-08-29 at top-15 the three chunks give 0.071 / 0.200 / 0.111 by W (top-30: 0.176 / 0.277 / 0.224); the conclusion is the same at every size, the text just needs to say "top-eight" or switch to the top-15 row. The philosophy-bias README misstates the design (F7). GLM's RESULTS.md says domain separation is "strongest early, L43 was noise"; the recompute shows two peaks of equal height. The 35B RESULTS.md token counts (2,404 / 110,412) differ slightly from the JSON cells (2,362 / 110,455).</div>
+
+<h2>5. Scorecard on the frozen predictions</h2>
+<table>
+<tr><th style="width:5%">#</th><th style="width:41%">Prediction (short)</th><th style="width:15%">Verdict</th><th style="width:39%">Basis</th></tr>
+<tr><td>P1</td><td>Prefill concentrates on a default, generation disperses; 224 is the default in ≥70% of prompt sets</td><td><span class="tag MIX">MIXED</span></td><td>Shape supported on 35B and 122B, prefill half on GLM. 224 leads only some prompt sets (F5); the "flat default" escape clause held every time.</td></tr>
+<tr><td>P2</td><td>E114 is a register expert: top-5 in philosophy/religion/psychology, outside top-20 in math/physics/chemistry/stats/code</td><td><span class="tag MIX">MIXED</span></td><td>Reflective clause supported everywhere. Exclusion clause broken by physics (rank 9 to 10) and law (11); psychology only 9 to 14; archaeology top-5 was unpredicted.</td></tr>
+<tr><td>P3</td><td>In the medical arms E114 rises in person-addressed arms; dialect moves it less than register</td><td><span class="tag MIX">MIXED</span></td><td>Sign right in 23 of 24 pairs, but tiny (rank 96 to 146 throughout); dialect and register confounded in that design; no addressee arm exists.</td></tr>
+<tr><td>P4</td><td>E114 prefill rank 20 to 90 on most sets; top-10 only on reflective prompts</td><td><span class="tag MIX">MIXED</span></td><td>Direction right (top-10 only on reflective prompts). Range wrong: ordinary prompts put it at 90 to 230, reflective at 5 to 40.</td></tr>
+<tr><td>P5</td><td>E114 best layer 20 to 30</td><td><span class="tag SUP">SUPPORTED</span></td><td>Best layer 26 (generation) / 20 (prefill) on the domain probe, 22 on the register run. Caveat: four peaks at 8, 14, 20, 26; HVAC experience peaks at 14.</td></tr>
+<tr><td>P6</td><td>With 10+ prompts per domain the 20 distinct winners consolidate to 14 to 17</td><td><span class="tag NT">NOT TESTABLE</span></td><td>No such set exists. The 16-of-20 fragility bound (F3) and 122B's 18 at n = 3 point the same way.</td></tr>
+<tr><td>P7</td><td>Dialect shifts prefill more than generation</td><td><span class="tag MIX">MIXED</span></td><td>True on pooled distributions (JSD 0.00054 prefill vs 0.00023 generation; medical 0.0059 vs 0.0011). Raw per-pair Jaccard says the opposite until you subtract the floor.</td></tr>
+<tr><td>P8</td><td>No single E114 analog on 122B; the register signal lives mainly on the 12 softmax layers</td><td><span class="tag MIX">MIXED</span></td><td>First clause supported. "Mainly softmax" not established: the best softmax candidate (E48) is a spill artifact and DeltaNet has its own stable carriers (E140, E5).</td></tr>
+</table>
+<p>One supported, six mixed, one untestable. The directional calls held; the numeric ranges and the exclusion lists did not. The two things I did not predict at all: the register component of the domain winners being as large as the topic component (F4), and E114's reach into archaeology and physics.</p>
+
+<h2>6. What this means for the paper</h2>
+<ul>
+<li><b>Keep every headline number.</b> All of them recompute.</li>
+<li><b>Add F2/F2a as the second result</b> (Results 3.3): the identification table and the four nulls. This is stronger evidence of specialization than the winner tables and needs no new capture. Done in the v1.2 abstract (95 to 96% vs 15 to 17% vs 6%).</li>
+<li><b>State F3 in Limitations with the numbers.</b> Only four per-domain winners are stable at n = 3; name only those.</li>
+<li><b>Add a base paragraph to Discussion (F11)</b> and scope the regime effect to short mixed prompts.</li>
+<li><b>Add a register paragraph to Discussion (F4).</b> The 60-prompt probe holds register constant, which is why its winners read as subject; the claim should be scoped to that. One sentence on the HVAC 0.50 → 0.00 result and the dialect null does it.</li>
+<li><b>Fix the 122B disclosures</b>: separate-capture prefill (bug 1), the trimmer no-op and the 45% spill in the generation block (bug 2). The 122B dispersion should be described as "answer plus spill, pending re-trim."</li>
+<li><b>Small corrections</b>: say "top-eight" for the token-balanced Jaccard (or report the top-15 row); "attending to everything before it" is wrong for the DeltaNet layers; Hayashi et al. use the official FP8 checkpoint; define the 0.958 entropy as top-8 normalized; the 35B <code>.npz</code> holds per-layer summaries, not raw tensors.</li>
+<li><b>Cite Wang, Hayou and Nalisnick (arXiv 2604.09780)</b> for the prefill/generation premise on five other models, and say they did not test the domain question.</li>
+<li><b>Causal subsection</b> should say what F7 says: removable, not load-bearing.</li>
+</ul>
+
+<h2>7. What is missing</h2>
+<ul>
+<li>GLM domain <b>generation</b> captures. This is the one experiment that would make the claim cross-family. The prompts, the rig and the analysis exist; only the generation pass was never run.</li>
+<li>A 10-plus-prompts-per-domain 35B run, so that per-domain winners can be named with confidence (P6) and the winner tables stop being the weakest layer. Checked 2026-08-29: a leave-one-prompt-out on the existing 60-prompt probe is not possible, no per-prompt router tensors survive anywhere on the drive (only the 20×256 domain-pooled arrays). Run it on the <b>base</b> checkpoint and keep the per-cell tensors; that closes P6 and F11 in one box-hour.</li>
+<li>A register-crossed domain probe: the same 20 subjects asked in an expository and a reflective voice, so the topic and register components of the generation winner can be separated on one design instead of inferred across three.</li>
+<li>122B raw router tensors, to re-trim the generation block and settle the last-layer artifact by row count. They were deleted on the box; a re-capture is the only route.</li>
+</ul>
+
+<h2>8. Changelog</h2>
+<ul>
+<li><b>v1, 2026-08-28.</b> Five-agent recompute; F1 to F10; four archive bugs; prediction scorecard.</li>
+<li><b>v2, 2026-08-29.</b> F2a: cross-design identification table and nulls 4 to 7 (from the 3-chunk and 60-prompt tensors). F11: base-checkpoint replication (50-pair shape, shared crews, l1l3 and medical scoping) plus the 12-prompt base safety smoke scored today. Section 4: token-balanced Jaccard recomputed at top-15 and top-30. Section 7: leave-one-out on the 60-prompt probe confirmed impossible from local data. Full sweep of the drive: 105 directories hold router tensors; every one not in the curated repo is E114 / self-reference, another model family, or a duplicate.</li>
+</ul>
+</body></html>

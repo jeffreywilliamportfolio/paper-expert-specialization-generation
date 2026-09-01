@@ -1,0 +1,135 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Data Ledger: Generation-Time Expert Specialization</title>
+<style>
+@page{size:letter;margin:0.8in 0.8in 0.9in 0.8in;@bottom-center{content:"Data ledger, Qwen3.5 expert specialization, 2026-08-28. Page " counter(page) " of " counter(pages);font:9pt Helvetica,Arial,sans-serif;color:#666}}
+body{font:10.5pt/1.42 Georgia,"Times New Roman",serif;color:#111;max-width:100%}
+h1{font:bold 20pt/1.2 Helvetica,Arial,sans-serif;margin:0 0 4pt}
+.sub{font:10pt Helvetica,Arial,sans-serif;color:#555;margin:0 0 18pt}
+h2{font:bold 13.5pt/1.2 Helvetica,Arial,sans-serif;margin:20pt 0 6pt;border-bottom:1.5px solid #222;padding-bottom:3pt;page-break-after:avoid}
+h3{font:bold 11pt Helvetica,Arial,sans-serif;margin:14pt 0 4pt;page-break-after:avoid}
+p{margin:0 0 7pt}
+table{border-collapse:collapse;width:100%;table-layout:fixed;margin:6pt 0 12pt;font-size:9.3pt;page-break-inside:auto}
+tr{page-break-inside:avoid}
+th{background:#eee;text-align:left;font:bold 9pt Helvetica,Arial,sans-serif;padding:4pt 5pt;border-bottom:1px solid #999;vertical-align:bottom}
+td{padding:4pt 5pt;border-bottom:1px solid #ddd;vertical-align:top}
+td.n{font-size:8.6pt;word-break:break-word}
+.tag{display:inline-block;font:bold 7.8pt Helvetica,Arial,sans-serif;padding:1.5pt 5pt;border-radius:3px;color:#fff;letter-spacing:.3px;white-space:nowrap}
+.LOW{background:#8a8a8a}.MED{background:#2f6fb5}.HIGH{background:#c8730a}.XHIGH{background:#b3121b}
+.prov{font:8.4pt/1.35 "Courier New",monospace;background:#f6f6f6;border-left:3px solid #bbb;padding:6pt 8pt;margin:4pt 0 10pt;white-space:pre-wrap;word-break:break-all}
+.flag{border-left:3px solid #b3121b;background:#fff4f4;padding:6pt 9pt;margin:8pt 0 10pt}
+.key{font:9pt Helvetica,Arial,sans-serif;color:#444;margin:4pt 0 14pt}
+.key span{margin-right:10pt}
+ul{margin:0 0 8pt 18pt;padding:0}li{margin:0 0 3pt}
+code{font:9.2pt "Courier New",monospace}
+</style></head><body>
+
+<h1>Data Ledger: Expert Specialization in Generation, Not Prefill</h1>
+<p class="sub">Companion to <i>Generation-Time Routing Reveals Expert Specialization That Prefill Measurements Miss</i> (Shorthill, v1.1, concept DOI 10.5281/zenodo.20779604). Compiled 2026-08-28 from the archived runs in <code>data/</code>. Every value below was re-read from the source tables on that date.</p>
+
+<p class="key"><b>Significance labels.</b>
+<span><span class="tag XHIGH">XHIGH</span> the claim fails without it</span>
+<span><span class="tag HIGH">HIGH</span> removes a main objection</span>
+<span><span class="tag MED">MED</span> supports or scopes the claim</span>
+<span><span class="tag LOW">LOW</span> integrity check or worked example</span></p>
+
+<h2>1. Introduction</h2>
+<p>A mixture-of-experts (MoE) layer routes each token to a few of many expert blocks. The standard question is whether those experts divide up knowledge by subject. The best known answer, from the Mixtral report, is no. That answer was measured over supplied text, which the model processes in a single parallel pass (prefill). The model also routes tokens while it writes its answer, one token at a time (generation). Nobody had asked whether the two passes agree.</p>
+<p>They do not. Over prefill, one expert wins nearly every subject. Over generation, each subject gets its own leading expert. The shift holds when prefill and generation are matched in length, and it repeats in a second, larger model whose expert numbering has nothing to do with the first. This ledger lists what was run, where each number lives, how much weight each number carries, and why the result matters.</p>
+
+<h2>2. What the experiments were</h2>
+<p>Three runs, all greedy decoding, all on 8-bit community fine-tunes of Qwen3.5 MoE models (HauhauCS "Uncensored Aggressive" variants), all captured with a patched llama.cpp binary that dumps router logits per token per layer. Routing weights are rebuilt the same way everywhere: softmax over 256 router logits, keep the top 8, renormalize to sum to one. For an expert, <i>W</i> is its mean weight over all tokens, <i>S</i> the fraction of tokens that select it, <i>Q</i> its mean weight when selected. A domain's winner is the expert with the highest <i>W</i> over that domain's prompts and all layers.</p>
+
+<h3>Run 1. 35B primary probe</h3>
+<p>60 short questions, 20 academic domains, 3 per domain. Qwen3.5-35B-A3B (40 layers, 256 experts, top-8, about 3B active). One capture per prompt, split at the prompt boundary: prompt tokens are the prefill block, produced tokens are the generation block. Generation capped at 2,056 tokens. The generation block was also analyzed twice, once trimmed at the first chat-template spill and once untrimmed.</p>
+
+<h3>Run 2. 35B token-balanced control</h3>
+<p>Same model. Three prompts, each packing twenty domain questions and padded to exactly 446 prompt tokens, each allowed 2,048 generated tokens. Purpose: check that the prefill/generation difference is not just a short-set versus long-set artifact. Compared the top-expert sets of the two passes (Jaccard overlap) and the per-token routing entropy of each pass.</p>
+
+<h3>Run 3. 122B replication</h3>
+<p>Same 60 prompts on Qwen3.5-122B-A10B (48 layers, 36 gated-DeltaNet and 12 softmax attention, 256 experts, top-8, about 10B active). Its expert indices are unrelated to the 35B model's. Two captures: a prefill-only pass (<code>-n 0</code>) and a generation pass (<code>-n 2048</code>). The generation pass also recorded its own prefill block.</p>
+
+<h2>3. Provenance</h2>
+<p>Early work; the 35B primary run predates the provenance discipline used later, so it has no binary hash. Paths are inside the paper repository's <code>data/</code> folder. Git: <code>github.com/jeffreywilliamportfolio/paper-expert-specialization-generation</code>. Claim index: <code>SOURCES.md</code>.</p>
+
+<h3>Run 1</h3>
+<div class="prov">run_id      20260408T235839Z_domain_specialist_no_think_hauhau
+model       Qwen3.5-35B-A3B-Uncensored-HauhauCS-Aggressive-Q8_0.gguf
+decode      no-think, greedy, -n 2056
+prompts     domain_specialist_probe_60_no_think.tsv (60 = 20 x 3)
+cells       60/60; prompt tokens 2404, generated 110412, total 112816
+capture bin capture_activations (custom llama.cpp example); hash NOT recorded
+files       35b-60prompt-primary/results_domain_specialists_20260408T235839Z.{md,json}
+            35b-60prompt-primary/raw/...npz  (per-domain x layer x expert W/S/Q, 20x40x256; NOT raw per-token tensors)</div>
+
+<h3>Run 2</h3>
+<div class="prov">run_id      20260410T173400Z_domain_expert_probe_3chunk_balanced_gen_n2048
+model       Qwen3.5-35B-A3B-Uncensored-HauhauCS-Aggressive-Q8_0.gguf
+decode      generation+prefill, seed 42, temp 0, top-k 1, ctx 32768, flash-attn, KV q8_0, -n 2048
+prompts     3 chunks (20A, 20B, 20C), 446 prompt tokens each; padding 0 / 73 / 44 tokens
+capture bin /workspace/consciousness-experiment/capture_activations; hash NOT recorded
+files       35b-3chunk-token-balanced/DOCS/RESULTS.md (cited values)
+            35b-3chunk-token-balanced/results/*.json|.md, per_token_*/ (per-token npz+tsv)
+            35b-3chunk-token-balanced/METHOD/ (analysis scripts, capture_activations.cpp, qwen_router.py)</div>
+
+<h3>Run 3</h3>
+<div class="prov">prefill run 20260412T160341Z_qwen122_domain_specialist_probe_60_routing_only   (-n 0)
+gen run     20260412T161833Z_qwen122_domain_specialist_probe_60_gen_n2048       (-n 2048)
+model       Qwen3.5-122B-A10B-Uncensored-HauhauCS-Aggressive-Q8_K_P.gguf (144,514,683,488 bytes; sha256 not recorded)
+capture bin sha256 c3e205b3a6324f6ce11e775b8ab1c9115904e348ec118fcb62d5e31ccae62e70 (both runs)
+flags       -ngl 999 -c 16384 -t 16 -fa on --cache-type-k q8_0 --cache-type-v q8_0 --seed 42 --temp 0 --top-k 1 --routing-only
+files       122b-replication/routing-only/results.md + RESULTS/*.json  (prefill-only)
+            122b-replication/generation/results.md, text-results.md + RESULTS/*.json  (generation, with own prefill block)
+            122b-replication/JOURNAL-122B.md</div>
+
+<h2>4. The data, with significance</h2>
+
+<h3>Run 1: 35B primary</h3>
+<table><tr><th style="width:46%">Datum</th><th style="width:24%">Where</th><th style="width:9%">Label</th><th style="width:21%">Note</th></tr>
+<tr><td>Prefill: expert 224 wins 18 of 20 domains; 3 distinct winners (103 linguistics, 130 chemistry); Herfindahl 0.815, normalized entropy 0.13</td><td class="n">primary .md, Prefill &gt; Domain winners</td><td><span class="tag XHIGH">XHIGH</span></td><td>the prefill half of the claim</td></tr>
+<tr><td>Generation: 20 distinct winners across 20 domains; Herfindahl 0.050, entropy 1.00</td><td class="n">primary .md, Generation Trimmed &gt; Domain winners</td><td><span class="tag XHIGH">XHIGH</span></td><td>the generation half</td></tr>
+<tr><td>Generalist 224 wins exactly one domain in generation (political science, W 0.0092)</td><td class="n">primary .md line 1802</td><td><span class="tag HIGH">HIGH</span></td><td>the generalist does not merely share; it drops out</td></tr>
+<tr><td>Trimmed and untrimmed generation give the same 20 winners</td><td class="n">RESULTS-summary line 53; .md lines 924-948 vs 1782-1806</td><td><span class="tag HIGH">HIGH</span></td><td>rules out a chat-template spill artifact</td></tr>
+<tr><td>224 is also the top expert overall on prefill (W 0.0127, S 0.079)</td><td class="n">primary .md, Prefill &gt; Overall</td><td><span class="tag MED">MED</span></td><td>the generalist is a genuine default, not a tie-break winner</td></tr>
+<tr><td>Philosophy: generation winner E114 (W 0.0188, S 0.097); E114 was rank 5 within philosophy over prefill</td><td class="n">primary .md lines 84, 942</td><td><span class="tag MED">MED</span></td><td>worked example of an expert rising into a domain</td></tr>
+<tr><td>All 60 cells spill into chat-template continuation (60 layer-39 trim events)</td><td class="n">RESULTS-summary line 28</td><td><span class="tag LOW">LOW</span></td><td>limitation; handled by the trim check above</td></tr>
+<tr><td>W = S x Q residual at most 5.55e-17 on every token set</td><td class="n">RESULTS-summary line 34</td><td><span class="tag LOW">LOW</span></td><td>bookkeeping integrity</td></tr>
+<tr><td>Capture totals: 60/60 cells, 2,404 prompt tokens, 110,412 generated</td><td class="n">RESULTS-summary lines 21-26</td><td><span class="tag LOW">LOW</span></td><td>completeness</td></tr>
+</table>
+
+<h3>Run 2: 35B token-balanced control</h3>
+<table><tr><th style="width:46%">Datum</th><th style="width:24%">Where</th><th style="width:9%">Label</th><th style="width:21%">Note</th></tr>
+<tr><td>Jaccard overlap of prefill vs generation top-expert sets, by W: 0.000 / 0.231 / 0.067 (chunks A/B/C); by S: 0.067 / 0.231 / 0.000</td><td class="n">DOCS/RESULTS.md, Jaccard table</td><td><span class="tag XHIGH">XHIGH</span></td><td>the shift survives matched token count</td></tr>
+<tr><td>Mean per-token routing entropy (top-8, normalized by log2 8): prefill 0.9575, generation 0.9527; per-chunk deltas all negative (-0.0046, -0.0062, -0.0037)</td><td class="n">DOCS/RESULTS.md, Routing Entropy; METHOD/qwen_router.py line 9</td><td><span class="tag HIGH">HIGH</span></td><td>kills the "generation just routes more diffusely" reading</td></tr>
+<tr><td>Prompt tokens exactly 446 per chunk; padding 0 / 73 / 44</td><td class="n">results/...token_audit_summary.md</td><td><span class="tag MED">MED</span></td><td>the control is actually balanced</td></tr>
+<tr><td>E114 W-rank prefill to generation: A 30 to 21, B 82 to 25, C 89 to 7</td><td class="n">DOCS/RESULTS.md, Expert 114</td><td><span class="tag LOW">LOW</span></td><td>not used in the paper; separate line of work</td></tr>
+</table>
+
+<h3>Run 3: 122B replication</h3>
+<table><tr><th style="width:46%">Datum</th><th style="width:24%">Where</th><th style="width:9%">Label</th><th style="width:21%">Note</th></tr>
+<tr><td>Generation (trimmed): 18 distinct winners across 20 domains; E159 and E40 each win two; Herfindahl 0.060, entropy 0.95</td><td class="n">generation/results.md lines 1804-1827</td><td><span class="tag XHIGH">XHIGH</span></td><td>replication of the generation half</td></tr>
+<tr><td>Prefill (routing-only run): E233 wins 13 of 20; 7 distinct winners; Herfindahl 0.445, entropy 0.42. This is the value in the paper.</td><td class="n">routing-only/results.md, Domain Winners</td><td><span class="tag HIGH">HIGH</span></td><td>replication of the prefill half; see flag</td></tr>
+<tr><td>Prefill (the generation run's own prefill block): E233 wins 15 of 20; 6 distinct; Herfindahl 0.575, entropy 0.32. Not in the paper.</td><td class="n">generation/results.md lines 88-112</td><td><span class="tag HIGH">HIGH</span></td><td>paired reading; see flag</td></tr>
+<tr><td>Global top experts change identity between passes: prefill E233, E45, E72, E9, E215; generation E0, E11, E5, E1</td><td class="n">routing-only Overall; generation Overall top</td><td><span class="tag MED">MED</span></td><td>shift is not only at the domain-winner layer</td></tr>
+<tr><td>Expert indices unrelated across models: 40 vs 48 layers, different layouts; generalist is 224 in 35B and 233 in 122B</td><td class="n">JOURNAL-122B.md line 5; routing-only line 7</td><td><span class="tag MED">MED</span></td><td>makes the replication a shape replication, not an index match</td></tr>
+<tr><td>49 of 60 cells hit the 2,048 cap; mean generated length 1,868; every cell spills into chat-template continuation</td><td class="n">generation/text-results.md lines 18-22</td><td><span class="tag MED">MED</span></td><td>limitation; stated in the paper</td></tr>
+<tr><td>Mean prompt tokens 39.37</td><td class="n">routing-only/results.md line 37</td><td><span class="tag LOW">LOW</span></td><td>"a prompt is tens of tokens"</td></tr>
+<tr><td>Philosophy generation winner E40 (W 0.0099): outside the top 12 by W in philosophy prefill (W 0.0062), but rank 1 on the archive's composite specialist score for philosophy prefill</td><td class="n">generation line 1822; routing-only lines 286-290; RESULTS json domains_summary.philosophy</td><td><span class="tag LOW">LOW</span></td><td>worked example; see flag</td></tr>
+<tr><td>E114 (the 35B philosophy winner) in 122B: computer science rank 5 (prefill) / 4 (generation); nowhere else above rank 17</td><td class="n">routing-only line 125; generation line 1812</td><td><span class="tag LOW">LOW</span></td><td>indices do not carry across models</td></tr>
+</table>
+
+<h3>External corroboration (found 2026-08-28)</h3>
+<table><tr><th style="width:46%">Datum</th><th style="width:24%">Where</th><th style="width:9%">Label</th><th style="width:21%">Note</th></tr>
+<tr><td>Wang, Hayou and Nalisnick, "The Myth of Expert Specialization in MoEs" (JHU, arXiv 2604.09780, April 2026), five other MoE models: "prefill-phase expert usage is not a reliable proxy for full generation usage pattern"; "during prefilling, semantically unrelated sequences can activate exactly the same experts"; "characterizing specialization requires observing complete trajectories." They do not test whether generation routing sorts by domain.</td><td class="n">arxiv.org/abs/2604.09780, Sections 5.2, 5.3, Fig. 7</td><td><span class="tag HIGH">HIGH</span></td><td>independent support for the premise, on non-Qwen and non-hybrid models; not yet cited in v1.1</td></tr>
+</table>
+
+<h2>5. Flags found in this audit</h2>
+<div class="flag"><b>122B prefill is unpaired and not bit-stable.</b> The paper's 122B prefill row (13/20, 7 distinct) comes from the routing-only run. The generation run captured its own prefill with the same binary hash, prompts, and flags, differing only in <code>-n</code>, and there E233 wins 15/20 with 6 distinct. The claim holds under either reading (both concentrated; generation 18 distinct regardless). But the paper's sentence that prefill routing "is deterministic given the prompt and the weights" is contradicted by this archive, and Table 1 pairs a prefill from one capture with a generation from another without saying so. Fix: report the paired 15/20 or keep 13/20 and disclose the separate capture and the gap.</div>
+<div class="flag"><b>E40 example cuts both ways.</b> "Mid-pack in philosophy prefill" is true by W and false by the archive's composite score (rank 1). Either give the W rank or drop the example.</div>
+<div class="flag"><b>Smaller wording issues.</b> "Each attending to everything before it" is wrong for the 30/40 and 36/48 gated-DeltaNet layers. Hayashi et al. use the official FP8 checkpoint, not "the same checkpoint we use." Per-token entropy (0.958) is never defined as top-8 normalized. The 35B <code>.npz</code> holds per-layer summaries, not raw router tensors.</div>
+
+<h2>6. Why it matters</h2>
+<p><b>The negative result was measured in the wrong pass.</b> The most-cited evidence that MoE experts do not specialize by topic was taken over supplied text, which is prefill routing. Prefill routing in these models is dominated by one default expert regardless of subject. Read the same prompts over generation and each subject gets its own leader. So a prefill-only or pooled measurement understates specialization by construction, and a negative prefill result says nothing about generation.</p>
+<p><b>It is a regime effect, not a length effect.</b> With 446 prompt tokens against 2,048 generated tokens per chunk, the two passes still pick nearly disjoint expert sets, and per-token entropy barely moves. Generation spreads each token over about as many experts as prefill does and sends it to different ones. The leader identity changes; the spread does not. That is the specialization signal.</p>
+<p><b>It replicates where it should.</b> The 122B model has different depth, a hybrid DeltaNet/attention stack, and unrelated expert numbering. Its generalist is a different expert and its per-domain leaders are different experts, yet the concentrated-then-dispersed shape is the same. A second group, working on five unrelated models, independently found that prefill usage does not predict generation usage. The premise is not a quirk of one quantized fine-tune.</p>
+<p><b>Practical consequence.</b> Any expert-naming pipeline, specialization benchmark, or ablation study that scores routing over supplied text inherits the prefill picture. Measure the two passes separately and read specialization from generation. The XHIGH rows above are enough to carry that recommendation; the HIGH rows close the obvious objections; the flags are fixable in a revision without touching any XHIGH value.</p>
+
+</body></html>

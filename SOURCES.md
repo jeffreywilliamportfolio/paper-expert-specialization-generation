@@ -1,5 +1,10 @@
 # Source-to-claim index
 
+> **v1.2 note (2026-09-01):** this index covers the version 1.1 values, all of which
+> version 1.2 retains. Values new in v1.2 are audited claim-by-claim in
+> `ledger/AUDIT_v12_numbers_20260830.md`, with the analysis scripts in
+> `curated-data-index/audit_20260828/`.
+
 Archive paths are relative to `/Volumes/ExternalSSD/`.
 
 Three independent designs feed this paper:
